@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Deep Space Core — Mobile Design System</title>
+  <style>
+    :root {
+      --bg-0: #000000;
+      --bg-1: #050509;
+      --bg-2: #090912;
+      --surface-0: rgba(255, 255, 255, 0.025);
+      --surface-1: rgba(255, 255, 255, 0.045);
+      --surface-2: rgba(255, 255, 255, 0.075);
+      --border-soft: rgba(255, 255, 255, 0.075);
+      --border-strong: rgba(255, 255, 255, 0.14);
+      --text-main: #f7f7fb;
+      --text-muted: #9ca3af;
+      --text-soft: #626878;
+      --yellow: #facc15;
+      --yellow-soft: rgba(250, 204, 21, 0.16);
+      --purple: #8b5cf6;
+      --purple-2: #c084fc;
+      --purple-soft: rgba(139, 92, 246, 0.2);
+      --danger: #fb7185;
+      --success: #34d399;
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --shadow-deep: 0 24px 80px rgba(0,0,0,0.72);
+      --shadow-glow: 0 0 60px rgba(139,92,246,0.16);
+      --font: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font);
+      background:
+        radial-gradient(circle at 50% -10%, rgba(139, 92, 246, 0.26), transparent 34%),
+        radial-gradient(circle at 12% 24%, rgba(250, 204, 21, 0.08), transparent 24%),
+        radial-gradient(circle at 90% 38%, rgba(192, 132, 252, 0.16), transparent 28%),
+        linear-gradient(180deg, var(--bg-2), var(--bg-0) 42%, var(--bg-0));
+      color: var(--text-main);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .page {
+      width: min(1200px, 100%);
+      margin: 0 auto;
+      padding: 22px 14px 72px;
+    }
+
+    .design-brief {
+      padding: 18px 4px 28px;
+    }
+
+    .eyebrow {
+      color: var(--purple-2);
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    h1, h2, h3, p {
+      margin: 0;
+    }
+
+    h1 {
+      margin-top: 10px;
+      font-size: clamp(38px, 11vw, 84px);
+      line-height: 0.92;
+      letter-spacing: -0.07em;
+      max-width: 900px;
+    }
+
+    .brief-text {
+      margin-top: 18px;
+      max-width: 760px;
+      color: var(--text-muted);
+      font-size: clamp(16px, 4vw, 20px);
+      line-height: 1.55;
+    }
+
+    .rules-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .rule-card,
+    .spec-card,
+    .phone-shell,
+    .component-card {
+      border: 1px solid var(--border-soft);
+      background: linear-gradient(180deg, rgba(255,255,255,0.055), rgba(255,255,255,0.02));
+      box-shadow: var(--shadow-deep);
+      backdrop-filter: blur(22px);
+    }
+
+    .rule-card {
+      border-radius: var(--radius-lg);
+      padding: 16px;
+    }
+
+    .rule-label {
+      font-size: 12px;
+      color: var(--text-soft);
+      margin-bottom: 7px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 800;
+    }
+
+    .rule-card strong {
+      display: block;
+      font-size: 18px;
+      line-height: 1.25;
+    }
+
+    .mockup-section {
+      margin-top: 26px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+    .phone-shell {
+      position: relative;
+      overflow: hidden;
+      border-radius: 42px;
+      padding: 10px;
+      min-height: 780px;
+      background:
+        radial-gradient(circle at 75% 8%, rgba(139,92,246,0.26), transparent 25%),
+        radial-gradient(circle at 20% 68%, rgba(250,204,21,0.10), transparent 24%),
+        linear-gradient(145deg, #07070a, #020204 58%, #000);
+    }
+
+    .phone-screen {
+      position: relative;
+      min-height: 760px;
+      border-radius: 34px;
+      overflow: hidden;
+      border: 1px solid var(--border-soft);
+      background: rgba(0,0,0,0.42);
+    }
+
+    .starfield,
+    .starfield::before,
+    .starfield::after {
+      position: absolute;
+      inset: 0;
+      content: "";
+      pointer-events: none;
+    }
+
+    .starfield {
+      background-image:
+        radial-gradient(circle, rgba(255,255,255,0.55) 1px, transparent 1px),
+        radial-gradient(circle, rgba(255,255,255,0.25) 1px, transparent 1px);
+      background-size: 64px 64px, 102px 102px;
+      opacity: 0.18;
+      mask-image: linear-gradient(to bottom, black, transparent 78%);
+    }
+
+    .phone-content {
+      position: relative;
+      z-index: 2;
+      padding: 18px;
+      padding-bottom: 100px;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0 16px;
+    }
+
+    .avatar,
+    .icon-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 16px;
+      border: 1px solid var(--border-soft);
+      background: var(--surface-1);
+      display: grid;
+      place-items: center;
+      color: var(--text-muted);
+    }
+
+    .screen-title {
+      margin-top: 8px;
+      font-size: 34px;
+      line-height: 0.98;
+      letter-spacing: -0.055em;
+    }
+
+    .screen-subtitle {
+      margin-top: 10px;
+      color: var(--text-muted);
+      line-height: 1.45;
+      font-size: 15px;
+    }
+
+    .hero-card {
+      position: relative;
+      overflow: hidden;
+      margin-top: 22px;
+      min-height: 270px;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border-strong);
+      background:
+        radial-gradient(circle at 75% 16%, rgba(139,92,246,0.48), transparent 30%),
+        radial-gradient(circle at 22% 82%, rgba(250,204,21,0.16), transparent 28%),
+        linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.015));
+      box-shadow: var(--shadow-glow), inset 0 1px 0 rgba(255,255,255,0.12);
+    }
+
+    .orb {
+      position: absolute;
+      width: 130px;
+      height: 130px;
+      right: 20px;
+      top: 26px;
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 35% 28%, #fff, var(--purple-2) 18%, var(--purple) 45%, transparent 68%);
+      filter: blur(0.2px);
+      opacity: 0.74;
+    }
+
+    .hero-copy {
+      position: absolute;
+      left: 20px;
+      right: 20px;
+      bottom: 20px;
+    }
+
+    .tag {
+      display: inline-flex;
+      padding: 8px 11px;
+      border-radius: 999px;
+      background: rgba(250,204,21,0.12);
+      border: 1px solid rgba(250,204,21,0.18);
+      color: var(--yellow);
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .hero-copy h3 {
+      margin-top: 12px;
+      font-size: 31px;
+      line-height: 0.98;
+      letter-spacing: -0.045em;
+    }
+
+    .hero-copy p {
+      margin-top: 9px;
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 1.42;
+      max-width: 280px;
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .mini-stat {
+      border: 1px solid var(--border-soft);
+      background: var(--surface-0);
+      border-radius: 18px;
+      padding: 13px;
+      min-height: 82px;
+    }
+
+    .mini-stat span {
+      color: var(--text-soft);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .mini-stat strong {
+      display: block;
+      margin-top: 10px;
+      font-size: 22px;
+      letter-spacing: -0.04em;
+    }
+
+    .progress-card,
+    .mission-list-card,
+    .wallet-card {
+      margin-top: 14px;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border-soft);
+      background: var(--surface-1);
+      padding: 18px;
+    }
+
+    .chat-preview {
+      margin-top: 26px;
+      border-radius: 34px;
+      border: 1px solid var(--border-soft);
+      background:
+        radial-gradient(circle at 80% 8%, rgba(139,92,246,0.18), transparent 26%),
+        rgba(255,255,255,0.025);
+      overflow: hidden;
+      box-shadow: var(--shadow-deep);
+    }
+
+    .chat-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      background: rgba(0,0,0,0.22);
+    }
+
+    .chat-title {
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+    }
+
+    .chat-status {
+      margin-top: 3px;
+      color: var(--text-soft);
+      font-size: 12px;
+    }
+
+    .chat-body {
+      display: grid;
+      gap: 12px;
+      padding: 16px;
+    }
+
+    .message {
+      max-width: 82%;
+      padding: 12px 14px;
+      border-radius: 20px;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .message.other {
+      justify-self: start;
+      background: rgba(255,255,255,0.055);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-bottom-left-radius: 8px;
+      color: var(--text-main);
+    }
+
+    .message.me {
+      justify-self: end;
+      background: linear-gradient(135deg, rgba(250,204,21,0.98), rgba(245,158,11,0.98));
+      color: #050505;
+      border-bottom-right-radius: 8px;
+      font-weight: 650;
+    }
+
+    .system-message {
+      justify-self: center;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(139,92,246,0.12);
+      border: 1px solid rgba(139,92,246,0.16);
+      color: var(--purple-2);
+      font-size: 11px;
+      font-weight: 850;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .chat-input {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      padding: 14px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      background: rgba(0,0,0,0.28);
+    }
+
+    .input-pill {
+      min-height: 48px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      color: var(--text-soft);
+      background: rgba(255,255,255,0.045);
+      border: 1px solid rgba(255,255,255,0.06);
+      font-size: 14px;
+    }
+
+    .send-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 18px;
+      color: #050505;
+      background: var(--yellow);
+      font-weight: 950;
+    }
+
+    .state-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .state-card {
+      border-radius: 24px;
+      border: 1px solid var(--border-soft);
+      background: rgba(255,255,255,0.03);
+      padding: 16px;
+    }
+
+    .state-card h3 {
+      font-size: 17px;
+      letter-spacing: -0.035em;
+      margin-bottom: 7px;
+    }
+
+    .state-card p {
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--text-muted);
+    }
+
+    .sheet-preview {
+      margin-top: 16px;
+      border-radius: 30px 30px 24px 24px;
+      border: 1px solid var(--border-soft);
+      background: linear-gradient(180deg, rgba(255,255,255,0.075), rgba(255,255,255,0.025));
+      padding: 18px;
+      box-shadow: 0 -20px 70px rgba(0,0,0,0.35);
+    }
+
+    .sheet-handle {
+      width: 42px;
+      height: 5px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.20);
+      margin: 0 auto 18px;
+    }
+
+    .segmented-control {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      padding: 6px;
+      border-radius: 20px;
+      border: 1px solid var(--border-soft);
+      background: rgba(255,255,255,0.035);
+      margin-top: 16px;
+    }
+
+    .segment {
+      min-height: 42px;
+      border-radius: 15px;
+      display: grid;
+      place-items: center;
+      color: var(--text-soft);
+      font-size: 13px;
+      font-weight: 850;
+    }
+
+    .segment.active {
+      color: var(--text-main);
+      background: rgba(255,255,255,0.075);
+    }
+
+    @media (min-width: 760px) {
+      .state-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .progress-head,
+    .row-item,
+    .bottom-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .muted {
+      color: var(--text-muted);
+    }
+
+    .progress-value {
+      font-size: 30px;
+      font-weight: 950;
+      letter-spacing: -0.05em;
+    }
+
+    .bar {
+      height: 10px;
+      margin-top: 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      width: 74%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--yellow), var(--purple));
+      box-shadow: 0 0 24px rgba(250,204,21,0.22);
+    }
+
+    .action-grid {
+      display: grid;
+      grid-template-columns: 1.35fr 0.65fr;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    button {
+      border: 0;
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    .primary-btn,
+    .secondary-btn {
+      height: 58px;
+      border-radius: 21px;
+      font-weight: 950;
+      font-size: 16px;
+    }
+
+    .primary-btn {
+      color: #050505;
+      background: linear-gradient(135deg, var(--yellow), #f59e0b);
+      box-shadow: 0 14px 34px rgba(250,204,21,0.18);
+    }
+
+    .secondary-btn {
+      color: var(--text-main);
+      background: var(--surface-1);
+      border: 1px solid var(--border-soft);
+    }
+
+    .mission-list-card {
+      display: grid;
+      gap: 10px;
+    }
+
+    .row-item {
+      min-height: 66px;
+      padding: 10px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.026);
+      border: 1px solid rgba(255,255,255,0.045);
+    }
+
+    .row-left {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .row-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 16px;
+      background: linear-gradient(145deg, rgba(139,92,246,0.28), rgba(250,204,21,0.08));
+      border: 1px solid var(--border-soft);
+    }
+
+    .row-title {
+      font-weight: 850;
+      font-size: 14px;
+    }
+
+    .row-sub {
+      margin-top: 3px;
+      font-size: 12px;
+      color: var(--text-soft);
+    }
+
+    .reward {
+      color: var(--yellow);
+      font-weight: 900;
+      font-size: 13px;
+    }
+
+    .bottom-nav {
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      bottom: 16px;
+      z-index: 5;
+      height: 70px;
+      padding: 8px;
+      border-radius: 26px;
+      border: 1px solid var(--border-soft);
+      background: rgba(5,5,9,0.74);
+      backdrop-filter: blur(26px);
+      box-shadow: 0 20px 70px rgba(0,0,0,0.7);
+    }
+
+    .nav-item {
+      flex: 1;
+      height: 52px;
+      display: grid;
+      place-items: center;
+      border-radius: 20px;
+      color: var(--text-soft);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .nav-item.active {
+      background: rgba(255,255,255,0.07);
+      color: var(--text-main);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+    }
+
+    .component-section {
+      margin-top: 38px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .component-card,
+    .spec-card {
+      border-radius: var(--radius-xl);
+      padding: 20px;
+    }
+
+    .component-card h2,
+    .spec-card h2 {
+      font-size: 28px;
+      letter-spacing: -0.045em;
+      margin-bottom: 12px;
+    }
+
+    .component-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .token-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .token {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 13px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .token strong {
+      color: var(--text-main);
+    }
+
+    .reference-note {
+      margin-top: 38px;
+      border-radius: 34px;
+      padding: 22px;
+      background: linear-gradient(135deg, rgba(250,204,21,0.12), rgba(139,92,246,0.12));
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+
+    .reference-note h2 {
+      font-size: 30px;
+      letter-spacing: -0.05em;
+      margin-bottom: 12px;
+    }
+
+    .reference-note p,
+    .spec-card p,
+    .component-card p {
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    @media (min-width: 760px) {
+      .page {
+        padding: 42px 24px 92px;
+      }
+
+      .rules-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      .mockup-section {
+        grid-template-columns: minmax(360px, 430px) 1fr;
+        align-items: start;
+      }
+
+      .phone-shell {
+        position: sticky;
+        top: 24px;
+      }
+
+      .component-section {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .component-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="design-brief">
+      <div class="eyebrow">Locked direction</div>
+      <h1>Deep Space Core mobile redesign</h1>
+      <p class="brief-text">
+        This is the global design language for the app: native-feeling, premium, touch-first and immersive.
+        The app should feel like a polished mobile product floating in a cinematic OLED-black space environment — not like a dashboard, casino website or generic SaaS UI.
+      </p>
+
+      <div class="rules-grid">
+        <div class="rule-card">
+          <div class="rule-label">Base</div>
+          <strong>OLED black with deep purple atmosphere</strong>
+        </div>
+        <div class="rule-card">
+          <div class="rule-label">Surfaces</div>
+          <strong>Floating translucent cards, soft borders</strong>
+        </div>
+        <div class="rule-card">
+          <div class="rule-label">Accent</div>
+          <strong>Yellow for rewards and primary action</strong>
+        </div>
+        <div class="rule-card">
+          <div class="rule-label">Motion</div>
+          <strong>Subtle, tactile, spring-like interactions</strong>
+        </div>
+      </div>
+    </section>
+
+    <section class="mockup-section">
+      <div class="phone-shell">
+        <div class="phone-screen">
+          <div class="starfield"></div>
+          <div class="phone-content">
+            <div class="top-bar">
+              <div class="avatar">MV</div>
+              <div class="icon-btn">✦</div>
+            </div>
+
+            <h2 class="screen-title">Command Center</h2>
+            <p class="screen-subtitle">
+              The main screen should feel calm, premium and rewarding. Important actions are large and thumb-friendly.
+            </p>
+
+            <div class="hero-card">
+              <div class="orb"></div>
+              <div class="hero-copy">
+                <div class="tag">Featured Mission</div>
+                <h3>Black Horizon</h3>
+                <p>One strong visual anchor per screen. Use depth, glow and contrast instead of clutter.</p>
+              </div>
+            </div>
+
+            <div class="stats-row">
+              <div class="mini-stat"><span>XP</span><strong>2.4k</strong></div>
+              <div class="mini-stat"><span>Rank</span><strong>#18</strong></div>
+              <div class="mini-stat"><span>Streak</span><strong>12</strong></div>
+            </div>
+
+            <div class="progress-card">
+              <div class="progress-head">
+                <div>
+                  <div class="muted">Mission Progress</div>
+                  <div class="progress-value">74%</div>
+                </div>
+                <div class="reward">+320 XP</div>
+              </div>
+              <div class="bar"><div class="bar-fill"></div></div>
+            </div>
+
+            <div class="action-grid">
+              <button class="primary-btn">Start Mission</button>
+              <button class="secondary-btn">Squad</button>
+            </div>
+
+            <div class="mission-list-card">
+              <div class="row-item">
+                <div class="row-left"><div class="row-icon"></div><div><div class="row-title">Nebula Expedition</div><div class="row-sub">Sector 04</div></div></div>
+                <div class="reward">+120</div>
+              </div>
+              <div class="row-item">
+                <div class="row-left"><div class="row-icon"></div><div><div class="row-title">Daily Drop</div><div class="row-sub">Reward available</div></div></div>
+                <div class="reward">Claim</div>
+              </div>
+              <div class="row-item">
+                <div class="row-left"><div class="row-icon"></div><div><div class="row-title">Orbit Challenge</div><div class="row-sub">3 tasks left</div></div></div>
+                <div class="reward">+80</div>
+              </div>
+            </div>
+          </div>
+
+          <nav class="bottom-nav">
+            <div class="nav-item active">Home</div>
+            <div class="nav-item">Play</div>
+            <div class="nav-item">Rank</div>
+            <div class="nav-item">Profile</div>
+          </nav>
+        </div>
+      </div>
+
+      <div class="component-section">
+        <div class="spec-card">
+          <h2>Global layout rules</h2>
+          <p>
+            Design mobile-first. One main visual anchor per screen, then compact supporting modules below.
+            Avoid desktop dashboard density. Every primary action should be reachable with the thumb and visually obvious.
+          </p>
+          <div class="token-list">
+            <div class="token"><strong>Screen padding</strong><span>16–20px mobile</span></div>
+            <div class="token"><strong>Card radius</strong><span>22–34px</span></div>
+            <div class="token"><strong>Primary button height</strong><span>56–62px</span></div>
+            <div class="token"><strong>Bottom nav</strong><span>Floating glass pill</span></div>
+          </div>
+        </div>
+
+        <div class="spec-card">
+          <h2>Color behavior</h2>
+          <p>
+            Black is the default. Purple creates atmosphere and special states. Yellow is used sparingly for primary actions, progress, rewards and important feedback.
+          </p>
+          <div class="token-list">
+            <div class="token"><strong>Background</strong><span>#000 / #050509 / #090912</span></div>
+            <div class="token"><strong>Primary accent</strong><span>#facc15</span></div>
+            <div class="token"><strong>Special accent</strong><span>#8b5cf6 / #c084fc</span></div>
+            <div class="token"><strong>Borders</strong><span>white at 6–14% opacity</span></div>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h2>Component language</h2>
+          <p>
+            Components should feel layered, not boxed. Use soft translucent surfaces, blur, large radii, subtle inner highlights and minimal borders.
+          </p>
+          <div class="component-grid" style="margin-top:16px;">
+            <button class="primary-btn">Primary</button>
+            <button class="secondary-btn">Secondary</button>
+            <div class="mini-stat"><span>Metric</span><strong>84%</strong></div>
+            <div class="mini-stat"><span>Reward</span><strong style="color:var(--yellow);">+320</strong></div>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h2>Interaction rules</h2>
+          <p>
+            The app should feel tactile like a native mobile app. Prefer short spring animations, press compression, soft glow changes and reward feedback over loud animations.
+          </p>
+          <div class="token-list">
+            <div class="token"><strong>Tap feedback</strong><span>scale 0.97 → 1.00</span></div>
+            <div class="token"><strong>Transitions</strong><span>180–280ms</span></div>
+            <div class="token"><strong>Screen changes</strong><span>fade + slight vertical lift</span></div>
+            <div class="token"><strong>Rewards</strong><span>small glow pulse, not confetti spam</span></div>
+          </div>
+        </div>
+
+        <div class="spec-card">
+          <h2>Typography</h2>
+          <p>
+            Use native system fonts. Headlines are bold, tight and premium. Body text stays muted and calm. Avoid overly futuristic fonts because they make it look cheap.
+          </p>
+          <div class="token-list">
+            <div class="token"><strong>Font stack</strong><span>Inter / SF Pro / system-ui</span></div>
+            <div class="token"><strong>Headlines</strong><span>800–950 weight, tight tracking</span></div>
+            <div class="token"><strong>Body</strong><span>14–16px, muted gray</span></div>
+            <div class="token"><strong>Labels</strong><span>uppercase, letter-spaced</span></div>
+          </div>
+        </div>
+
+        <div class="spec-card">
+          <h2>What to avoid</h2>
+          <p>
+            Do not turn this into cyberpunk neon, casino UI, desktop SaaS or childish game UI. The design should be immersive, premium and consumer-grade.
+          </p>
+          <div class="token-list">
+            <div class="token"><strong>No</strong><span>dense tables / dashboard panels</span></div>
+            <div class="token"><strong>No</strong><span>neon outlines everywhere</span></div>
+            <div class="token"><strong>No</strong><span>tiny tap targets</span></div>
+            <div class="token"><strong>No</strong><span>generic Tailwind startup look</span></div>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h2>Clan chat pattern</h2>
+          <p>
+            Chat should stay readable and calm. Keep the Deep Space background, but make messages simpler than feature cards. Yellow is only for the user's own messages or important callouts. Purple is for system events, clan milestones and special announcements.
+          </p>
+
+          <div class="chat-preview">
+            <div class="chat-header">
+              <div>
+                <div class="chat-title">Clan Chat</div>
+                <div class="chat-status">18 online · Nebula Crew</div>
+              </div>
+              <div class="icon-btn">⋯</div>
+            </div>
+            <div class="chat-body">
+              <div class="system-message">Rank milestone reached</div>
+              <div class="message other">Toni unlocked the Black Horizon reward. Actually clean pull.</div>
+              <div class="message me">Run one more mission? I need 80 XP for next rank.</div>
+              <div class="message other">Bet. But don't waste the boost yet.</div>
+            </div>
+            <div class="chat-input">
+              <div class="input-pill">Message your clan…</div>
+              <button class="send-btn">↑</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h2>Sheets, forms and menus</h2>
+          <p>
+            Secondary flows should use native-feeling bottom sheets instead of full desktop-style pages. Forms should be sparse, large, thumb-friendly and visually quiet.
+          </p>
+
+          <div class="sheet-preview">
+            <div class="sheet-handle"></div>
+            <div class="tag">Bottom Sheet</div>
+            <h3 style="margin-top:12px;font-size:24px;letter-spacing:-0.045em;">Confirm mission boost</h3>
+            <p style="margin-top:8px;color:var(--text-muted);line-height:1.45;">Use restrained confirmation flows. One clear primary action, one quiet secondary action.</p>
+            <div class="segmented-control">
+              <div class="segment active">Safe</div>
+              <div class="segment">Fast</div>
+              <div class="segment">Max</div>
+            </div>
+            <div class="action-grid">
+              <button class="primary-btn">Confirm</button>
+              <button class="secondary-btn">Cancel</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h2>Edge states</h2>
+          <p>
+            The redesign needs rules for boring but important states. These prevent Claude Code from falling back to default browser or SaaS styling when a feature is not represented in the main mockup.
+          </p>
+          <div class="state-grid">
+            <div class="state-card"><h3>Empty states</h3><p>Use one small glowing icon/orb, a short headline and one primary action. No huge illustrations.</p></div>
+            <div class="state-card"><h3>Loading</h3><p>Use skeleton cards with soft shimmer or slow opacity pulse. Avoid spinners as the main loading language.</p></div>
+            <div class="state-card"><h3>Errors</h3><p>Use calm dark cards with soft rose accent. Never full red screens. Give one clear recovery action.</p></div>
+            <div class="state-card"><h3>Success</h3><p>Use subtle yellow/purple glow pulse, XP-style feedback and optional haptic-style motion.</p></div>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <h2>Feature mapping rules</h2>
+          <p>
+            For features not shown here, map them by function: feeds become stacked mission cards, settings become quiet grouped lists, chat becomes readable bubbles, ranking becomes compact cards and progress bars, wallet/account areas become premium data cards.
+          </p>
+          <div class="token-list">
+            <div class="token"><strong>Chat / clan</strong><span>simple bubbles, dark thread, yellow own messages</span></div>
+            <div class="token"><strong>Settings</strong><span>grouped glass rows, low visual intensity</span></div>
+            <div class="token"><strong>Leaderboards</strong><span>rank cards, badges, restrained glow</span></div>
+            <div class="token"><strong>Forms</strong><span>large inputs, bottom sheets, minimal fields</span></div>
+            <div class="token"><strong>Notifications</strong><span>small floating cards, reward language</span></div>
+            <div class="token"><strong>Modals</strong><span>bottom sheets on mobile, centered cards on desktop</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="codex-note">
+      <h2>Reference note for Claude Code</h2>
+      <p>
+        Use this page as a visual reference for the intended Deep Space Core direction. Keep the existing product functionality, but let this guide the overall atmosphere, spacing, surfaces, navigation, buttons, cards, chat, sheets, forms, loading states, empty states, error states, progress states and reward feedback. For any feature not shown exactly, preserve the feature's purpose and translate it into this mobile-first visual language instead of copying the mockup literally.
+      </p>
+    </section>
+  </main>
+</body>
+</html>

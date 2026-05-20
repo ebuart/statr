@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StatR – R Lernpfad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<link rel="stylesheet" href="/static/css/style.css">
+<link rel="stylesheet" href="/static/css/animations.css">
+</head>
+<body>
+<div id="app">
+  <!-- PATH VIEW -->
+  <div id="view-path" class="view active">
+    <header class="app-header">
+      <div class="header-left">
+        <span class="logo">StatR</span>
+        <span class="logo-sub">R Lernpfad</span>
+      </div>
+      <div class="header-right">
+        <div class="progress-summary" id="progress-summary">
+          <span id="summary-pct">0%</span>
+          <span class="summary-label">abgeschlossen</span>
+        </div>
+      </div>
+    </header>
+    <div class="path-layout">
+      <aside class="sidebar">
+        <div class="sidebar-stats">
+          <div class="stat-item">
+            <span class="stat-val" id="stat-chapters">0/15</span>
+            <span class="stat-lbl">Kapitel</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-val" id="stat-accuracy">–</span>
+            <span class="stat-lbl">Richtig</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-val" id="stat-answered">0</span>
+            <span class="stat-lbl">Fragen</span>
+          </div>
+        </div>
+        <div class="sidebar-legend">
+          <div class="legend-item"><span class="dot dot-high"></span> Klausur-kritisch</div>
+          <div class="legend-item"><span class="dot dot-medium"></span> Mittel</div>
+          <div class="legend-item"><span class="dot dot-low"></span> Niedrig</div>
+        </div>
+      </aside>
+      <main class="path-main">
+        <div id="chapter-path" class="chapter-path"></div>
+      </main>
+    </div>
+  </div>
+
+  <!-- SESSION VIEW -->
+  <div id="view-session" class="view">
+    <header class="session-header">
+      <button class="btn-back" id="btn-back-path">← Zurück</button>
+      <div class="session-title-area">
+        <span id="session-chapter-title"></span>
+        <span id="session-unit-label"></span>
+      </div>
+      <div class="session-meta">
+        <span id="session-difficulty"></span>
+      </div>
+    </header>
+    <div class="session-progress-bar">
+      <div class="session-progress-fill" id="session-progress-fill"></div>
+    </div>
+    <div class="session-layout">
+      <nav class="session-units-nav" id="session-units-nav"></nav>
+      <div class="session-content" id="session-content">
+        <!-- Concept card or question rendered here -->
+      </div>
+      <aside class="session-sidebar">
+        <div class="difficulty-display" id="difficulty-display"></div>
+        <div class="question-type-display" id="question-type-display"></div>
+        <div class="question-counter" id="question-counter"></div>
+        <button class="hint-btn" id="hint-btn" style="display:none">💡 Hinweis</button>
+        <div class="hint-panel" id="hint-panel" style="display:none"></div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- CHAPTER COMPLETE VIEW -->
+  <div id="view-complete" class="view">
+    <div class="complete-card">
+      <div class="complete-icon">✓</div>
+      <h2 id="complete-title"></h2>
+      <div class="complete-accuracy" id="complete-accuracy"></div>
+      <div id="complete-review-btn-wrap"></div>
+      <button class="btn-primary btn-unlock" id="btn-next-chapter">Nächstes Kapitel freischalten →</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="/static/js/matching.js"></script>
+<script src="/static/js/progress.js"></script>
+<script src="/static/js/concepts.js"></script>
+<script src="/static/js/questions.js"></script>
+<script src="/static/js/session.js"></script>
+<script src="/static/js/path.js"></script>
+<script src="/static/js/app.js"></script>
+</body>
+</html>
