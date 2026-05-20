@@ -2916,6 +2916,209 @@
           ]
         },
         {
+          "unit_id": "ch06_klausur_k1",
+          "unit_type": "practice",
+          "title": "Klausur K1 – DataFrame-Aufgaben",
+          "estimated_minutes": 20,
+          "items": [
+            {
+              "id": "ch06_k1_qa",
+              "type": "interpret_conclude",
+              "difficulty": 1,
+              "priority": "high",
+              "context": "Klausur-Aufgabe K1 – DataFrame X (Stadt/BL/Einw)",
+              "question": "Was gibt X[3,] aus?",
+              "code_snippet": null,
+              "console_output": "> X\n  Stadt  BL Einw\n1     A Nds   70\n2     B Bay   50\n3     C Bay  120\n4     D Sac   90\n5     E Nds  110\n6     F Sac   90\n7     G Bay   60\n> X[3,]",
+              "options": [
+                "  Stadt  BL Einw\n3     C Bay  120",
+                "  Stadt  BL Einw\n3     B Bay   50",
+                "[1] \"C\" \"Bay\" 120",
+                "  Stadt  BL Einw\n3     D Sac   90"
+              ],
+              "correct": "  Stadt  BL Einw\n3     C Bay  120",
+              "explanation": "X[3,] selektiert die gesamte 3. Zeile. Zeile 3 enthält Stadt=C, BL=Bay, Einw=120. R behält die Zeilennummer (3) als Zeilenname.",
+              "hint": "X[i,] = gesamte Zeile i mit allen Spalten.",
+              "visual": null
+            },
+            {
+              "id": "ch06_k1_qb",
+              "type": "interpret_conclude",
+              "difficulty": 2,
+              "priority": "high",
+              "context": "Klausur-Aufgabe K1 – DataFrame X (Stadt/BL/Einw)",
+              "question": "Was gibt X[seq(2, nrow(X), 3), 1] aus?",
+              "code_snippet": null,
+              "console_output": "> X\n  Stadt  BL Einw\n1     A Nds   70\n2     B Bay   50\n3     C Bay  120\n4     D Sac   90\n5     E Nds  110\n6     F Sac   90\n7     G Bay   60\n> X[seq(2,nrow(X),3),1]",
+              "options": [
+                "[1] \"B\" \"E\"",
+                "[1] \"B\" \"C\" \"D\" \"E\"",
+                "[1] 2 5",
+                "[1] \"A\" \"D\" \"G\""
+              ],
+              "correct": "[1] \"B\" \"E\"",
+              "explanation": "seq(2, 7, 3) = c(2, 5). X[c(2,5), 1] selektiert Spalte 1 (Stadt) der Zeilen 2 und 5 → \"B\" und \"E\".",
+              "hint": "seq(from, to, by): seq(2,7,3) ergibt c(2,5). Dann Spalte 1 (Stadt) dieser Zeilen.",
+              "visual": null
+            },
+            {
+              "id": "ch06_k1_qc",
+              "type": "interpret_conclude",
+              "difficulty": 1,
+              "priority": "high",
+              "context": "Klausur-Aufgabe K1 – DataFrame X (Stadt/BL/Einw)",
+              "question": "Was gibt X[nrow(X), ncol(X)] aus?",
+              "code_snippet": null,
+              "console_output": "> X\n  Stadt  BL Einw\n1     A Nds   70\n2     B Bay   50\n3     C Bay  120\n4     D Sac   90\n5     E Nds  110\n6     F Sac   90\n7     G Bay   60\n> X[nrow(X),ncol(X)]",
+              "options": [
+                "[1] 60",
+                "[1] 90",
+                "[1] \"G\"",
+                "[1] 7"
+              ],
+              "correct": "[1] 60",
+              "explanation": "nrow(X)=7, ncol(X)=3. X[7,3] = Zeile 7, Spalte 3 (Einw) = 60 (Stadt G, Bay).",
+              "hint": "nrow(X) = Anzahl Zeilen = 7. ncol(X) = Anzahl Spalten = 3.",
+              "visual": null
+            },
+            {
+              "id": "ch06_k1_qd",
+              "type": "interpret_conclude",
+              "difficulty": 2,
+              "priority": "high",
+              "context": "Klausur-Aufgabe K1 – DataFrame X (Stadt/BL/Einw)",
+              "question": "Was gibt X[-c(1,2,4,5), 2:3] aus?",
+              "code_snippet": null,
+              "console_output": "> X\n  Stadt  BL Einw\n1     A Nds   70\n2     B Bay   50\n3     C Bay  120\n4     D Sac   90\n5     E Nds  110\n6     F Sac   90\n7     G Bay   60\n> X[-c(1,2,4,5),2:3]",
+              "options": [
+                "   BL Einw\n3 Bay  120\n6 Sac   90\n7 Bay   60",
+                "   BL Einw\n1 Nds   70\n3 Bay  120",
+                "   BL Einw\n3 Bay  120\n4 Sac   90",
+                "  Stadt  BL\n3     C Bay\n6     F Sac\n7     G Bay"
+              ],
+              "correct": "   BL Einw\n3 Bay  120\n6 Sac   90\n7 Bay   60",
+              "explanation": "-c(1,2,4,5) schließt Zeilen 1,2,4,5 aus → verbleiben Zeilen 3,6,7. 2:3 = Spalten BL und Einw.",
+              "hint": "Negativer Index schließt Zeilen aus. -c(1,2,4,5) entfernt 4 Zeilen, übrig: 3,6,7.",
+              "visual": null
+            },
+            {
+              "id": "ch06_k1_qe",
+              "type": "interpret_conclude",
+              "difficulty": 1,
+              "priority": "medium",
+              "context": "Klausur-Aufgabe K1 – DataFrame X (Stadt/BL/Einw)",
+              "question": "Was gibt apply(X, 2, length) aus?",
+              "code_snippet": null,
+              "console_output": "> X\n  Stadt  BL Einw\n1     A Nds   70\n2     B Bay   50\n3     C Bay  120\n4     D Sac   90\n5     E Nds  110\n6     F Sac   90\n7     G Bay   60\n> apply(X,2,length)",
+              "options": [
+                "Stadt    BL  Einw \n    7     7     7",
+                "[1] 3",
+                "[1] 7",
+                "Stadt    BL  Einw \n    1     1     1"
+              ],
+              "correct": "Stadt    BL  Einw \n    7     7     7",
+              "explanation": "MARGIN=2 → über Spalten iterieren. length() jeder Spalte = Anzahl Zeilen = 7. Ergebnis ist ein benannter Vektor mit 7 für jede der 3 Spalten.",
+              "hint": "apply(X, 2, f) wendet f auf jede Spalte an. length() einer Spalte = nrow(X) = 7.",
+              "visual": null
+            },
+            {
+              "id": "ch06_k1_qf",
+              "type": "interpret_conclude",
+              "difficulty": 2,
+              "priority": "high",
+              "context": "Klausur-Aufgabe K1 – DataFrame X (Stadt/BL/Einw)",
+              "question": "Was gibt X[order(X$Einw),]$Stadt aus?",
+              "code_snippet": null,
+              "console_output": "> X\n  Stadt  BL Einw\n1     A Nds   70\n2     B Bay   50\n3     C Bay  120\n4     D Sac   90\n5     E Nds  110\n6     F Sac   90\n7     G Bay   60\n> X[order(X$Einw),]$Stadt",
+              "options": [
+                "[1] \"B\" \"G\" \"A\" \"D\" \"F\" \"E\" \"C\"",
+                "[1] \"C\" \"E\" \"D\" \"F\" \"A\" \"G\" \"B\"",
+                "[1] \"A\" \"B\" \"C\" \"D\" \"E\" \"F\" \"G\"",
+                "[1] \"B\" \"G\" \"A\" \"F\" \"D\" \"E\" \"C\""
+              ],
+              "correct": "[1] \"B\" \"G\" \"A\" \"D\" \"F\" \"E\" \"C\"",
+              "explanation": "order(X$Einw) sortiert aufsteigend nach Einwohnern: 50(B), 60(G), 70(A), 90(D), 90(F), 110(E), 120(C). Bei gleichen Werten (D und F: beide 90) bleibt die ursprüngliche Reihenfolge.",
+              "hint": "order() gibt Indizes der sortierten Reihenfolge zurück (aufsteigend). X[order(X$Einw),] sortiert den DataFrame nach Einw.",
+              "visual": null
+            },
+            {
+              "id": "ch06_k1_qg",
+              "type": "interpret_conclude",
+              "difficulty": 2,
+              "priority": "high",
+              "context": "Klausur-Aufgabe K1 – DataFrame X (Stadt/BL/Einw)",
+              "question": "Was gibt sum(X[X$Einw > 100, 3]) aus?",
+              "code_snippet": null,
+              "console_output": "> X\n  Stadt  BL Einw\n1     A Nds   70\n2     B Bay   50\n3     C Bay  120\n4     D Sac   90\n5     E Nds  110\n6     F Sac   90\n7     G Bay   60\n> sum(X[X$Einw>100,3])",
+              "options": [
+                "[1] 230",
+                "[1] 2",
+                "[1] 120",
+                "[1] 110"
+              ],
+              "correct": "[1] 230",
+              "explanation": "X$Einw > 100 → Zeilen mit Einw > 100: C(120) und E(110). X[..., 3] = Spalte 3 (Einw) dieser Zeilen: c(120, 110). sum = 230.",
+              "hint": "Erst Boolesche Indizierung: welche Zeilen haben Einw > 100? Dann Spalte 3 (Einw) selektieren und summieren.",
+              "visual": null
+            },
+            {
+              "id": "ch06_k1_qh",
+              "type": "interpret_conclude",
+              "difficulty": 3,
+              "priority": "high",
+              "context": "Klausur-Aufgabe K1 – DataFrame X (Stadt/BL/Einw)",
+              "question": "Was gibt aggregate(X$Einw ~ X$BL, FUN=min) aus?",
+              "code_snippet": null,
+              "console_output": "> X\n  Stadt  BL Einw\n1     A Nds   70\n2     B Bay   50\n3     C Bay  120\n4     D Sac   90\n5     E Nds  110\n6     F Sac   90\n7     G Bay   60\n> aggregate(X$Einw~X$BL, FUN=min)",
+              "options": [
+                "  X$BL X$Einw\n1  Bay     50\n2  Nds     70\n3  Sac     90",
+                "  X$BL X$Einw\n1  Bay    120\n2  Nds    110\n3  Sac     90",
+                "  X$BL X$Einw\n1  Bay     77\n2  Nds     90\n3  Sac     90",
+                "  X$BL X$Einw\n1  Bay      3\n2  Nds      2\n3  Sac      2"
+              ],
+              "correct": "  X$BL X$Einw\n1  Bay     50\n2  Nds     70\n3  Sac     90",
+              "explanation": "aggregate gruppiert X$Einw nach X$BL und wendet min() an. Bay: min(50,120,60)=50. Nds: min(70,110)=70. Sac: min(90,90)=90. Gruppen alphabetisch sortiert.",
+              "hint": "aggregate(y ~ gruppe, FUN=f) wendet f auf y für jede Gruppe an. Gruppen werden alphabetisch sortiert ausgegeben.",
+              "visual": null
+            },
+            {
+              "id": "ch06_k1_qfunc",
+              "type": "interpret_conclude",
+              "difficulty": 2,
+              "priority": "high",
+              "context": "Klausur-Aufgabe K1g – Funktion auf DataFrame",
+              "question": "Was macht f(X, c(3,1,2))?",
+              "code_snippet": "f <- function(Y, rf) return(Y[, rf])",
+              "console_output": null,
+              "options": [
+                "Gibt X mit Spalten in Reihenfolge Einw, Stadt, BL zurück (Spalten 3,1,2 neu geordnet)",
+                "Gibt die Zeilen 3, 1, 2 von X zurück",
+                "Gibt einen Fehler zurück, da rf kein gültiger Spaltenname ist",
+                "Gibt nur die 3. Spalte (Einw) zurück"
+              ],
+              "correct": "Gibt X mit Spalten in Reihenfolge Einw, Stadt, BL zurück (Spalten 3,1,2 neu geordnet)",
+              "explanation": "Y[, rf] selektiert Spalten mit dem Indexvektor rf=c(3,1,2). Das ergibt X mit Spalten in Reihenfolge 3 (Einw), 1 (Stadt), 2 (BL) — also ein DataFrame mit umgeordneten Spalten.",
+              "hint": "Y[, rf] mit Vektor rf selektiert Spalten in der angegebenen Reihenfolge. rf=c(3,1,2) → erst Spalte 3, dann 1, dann 2.",
+              "visual": null
+            },
+            {
+              "id": "ch06_k1_quniq",
+              "type": "mini_challenge",
+              "difficulty": 3,
+              "priority": "high",
+              "context": "Klausur-Aufgabe K1h – Funktion schreiben",
+              "question": "Schreibe die Funktion uniq(x), die die sortierte Wertemenge von x zurückgibt (jeder Wert nur einmal). Nutze nur Basis-R-Funktionen (sort, unique oder Schleifen).",
+              "code_snippet": "# Ziel:\n# uniq(c(6,4,3,6,1,4,4,3,6))  →  [1] 1 3 4 6\n\n# Variante 1 (elegant):\nuniq <- function(x) {\n  _____(_____( x ))\n}\n\n# Variante 2 (mit Schleife – ohne unique()):\nuniq <- function(x) {\n  result <- c()\n  for (val in sort(x)) {\n    if (!(val _____ result)) {\n      result <- c(result, val)\n    }\n  }\n  return(result)\n}",
+              "options": [],
+              "correct": "sort",
+              "correct_pattern": "sort",
+              "explanation": "Variante 1: sort(unique(x)) — unique() entfernt Duplikate, sort() sortiert. Variante 2: Mit Schleife über sort(x), nur hinzufügen wenn val noch nicht in result: !(val %in% result). Beide sind in Basis-R verfügbar.",
+              "hint": "Zwei Schritte: (1) Duplikate entfernen, (2) sortieren. R-Funktionen: unique() entfernt Duplikate, sort() sortiert. Oder kombiniert: sort(unique(x)).",
+              "visual": null
+            }
+          ]
+        },
+        {
           "unit_id": "ch06_summary",
           "unit_type": "summary",
           "title": "Kapitel 6 abgeschlossen",
