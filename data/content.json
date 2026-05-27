@@ -1547,6 +1547,21 @@
           ]
         },
         {
+          "unit_id": "ch04_concept_apply",
+          "unit_type": "concept",
+          "title": "apply-Familie & Funktionale",
+          "estimated_minutes": 5,
+          "items": [
+            {
+              "type": "concept_card",
+              "title": "sapply, lapply, apply, Reduce, outer",
+              "content_html": "<table class='concept-table'><thead><tr><th>Funktion</th><th>Eingabe</th><th>Ausgabe</th><th>Beispiel</th></tr></thead><tbody><tr><td><code>sapply(x, f)</code></td><td>Vektor/Liste</td><td>Vektor/Matrix (vereinfacht)</td><td><code>sapply(c(1,4,9), sqrt)</code> → c(1,2,3)</td></tr><tr><td><code>lapply(x, f)</code></td><td>Vektor/Liste</td><td>immer Liste</td><td><code>lapply(1:3, function(i) i^2)</code></td></tr><tr><td><code>apply(M,1,f)</code></td><td>Matrix</td><td>Vektor (zeilenweise)</td><td><code>apply(M, 1, sum)</code> – Zeilensummen</td></tr><tr><td><code>apply(M,2,f)</code></td><td>Matrix</td><td>Vektor (spaltenweise)</td><td><code>apply(M, 2, mean)</code> – Spaltenmittel</td></tr><tr><td><code>Reduce(f, x)</code></td><td>Funktion + Vektor</td><td>Skalar</td><td><code>Reduce('+', 1:5)</code> → 15</td></tr><tr><td><code>outer(x, y, f)</code></td><td>zwei Vektoren</td><td>Matrix aller Paare</td><td><code>outer(1:3, 1:3, '*')</code></td></tr></tbody></table><p>Filtern mit logischem Vektor: <code>x[x > 0]</code> – gibt nur positive Werte zurück.</p>",
+              "visual_type": "table",
+              "key_takeaway": "sapply gibt Vektor zurück, lapply immer Liste. apply(M,1,f) = zeilenweise, apply(M,2,f) = spaltenweise."
+            }
+          ]
+        },
+        {
           "unit_id": "ch04_practice_1",
           "unit_type": "practice",
           "title": "Vektor-Funktionen",
@@ -1966,6 +1981,21 @@
               "content_html": "<div class='matrix-visual'><pre><code>A &lt;- matrix(c(5,1,2, 7,1,0, 0,0,1), nrow=3)\n\n     [,1] [,2] [,3]\n[1,]    5    7    0\n[2,]    1    1    0\n[3,]    2    0    1</code></pre><p class='matrix-note'>R füllt Spaltenweise (column-major)!</p></div>",
               "visual_type": "diagram",
               "key_takeaway": "matrix() füllt spaltenweise. Zugriff: M[Zeile, Spalte]. Leer lassen = ganze Zeile/Spalte."
+            }
+          ]
+        },
+        {
+          "unit_id": "ch05_concept_ops",
+          "unit_type": "concept",
+          "title": "Matrix-Operationen & solve()",
+          "estimated_minutes": 5,
+          "items": [
+            {
+              "type": "concept_card",
+              "title": "rbind, cbind, %*%, solve(), t()",
+              "content_html": "<table class='concept-table'><thead><tr><th>Funktion</th><th>Bedeutung</th><th>Beispiel</th></tr></thead><tbody><tr><td><code>rbind(A, B)</code></td><td>Matrizen zeilenweise stapeln</td><td>A:2×3 + B:3×3 → 5×3</td></tr><tr><td><code>cbind(A, B)</code></td><td>Matrizen spaltenweise stapeln</td><td>A:3×2 + B:3×1 → 3×3</td></tr><tr><td><code>t(M)</code></td><td>Transponieren (Zeilen↔Spalten)</td><td><code>t(matrix(1:6,2,3))</code> → 3×2</td></tr><tr><td><code>A %*% B</code></td><td>Matrixmultiplikation</td><td>A:2×3, B:3×2 → 2×2</td></tr><tr><td><code>solve(A)</code></td><td>Inverse von A (quadratisch!)</td><td><code>solve(A) %*% A</code> → Einheitsmatrix</td></tr><tr><td><code>solve(A, b)</code></td><td>Lineares Gleichungssystem Ax=b</td><td><code>x &lt;- solve(A, b)</code></td></tr><tr><td><code>apply(M,2,sum)</code></td><td>Spaltensummen</td><td><code>colSums(M)</code> ist schneller</td></tr></tbody></table>",
+              "visual_type": "table",
+              "key_takeaway": "* ist elementweise, %*% ist Matrixprodukt. solve(A,b) löst lineare Gleichungssysteme. solve(A) ohne b gibt die Inverse."
             }
           ]
         },
@@ -3668,6 +3698,21 @@
           ]
         },
         {
+          "unit_id": "ch08_concept_dplyr",
+          "unit_type": "concept",
+          "title": "dplyr: Daten filtern, auswählen, transformieren",
+          "estimated_minutes": 5,
+          "items": [
+            {
+              "type": "concept_card",
+              "title": "filter(), select(), mutate(), group_by(), summarise()",
+              "content_html": "<p>dplyr macht Datentransformationen lesbar mit dem Pipe-Operator <code>|&gt;</code> (R 4.1+) oder <code>%&gt;%</code>:</p><div class='console-sim'><span class='prompt'>&gt;</span> library(dplyr)<br><span class='prompt'>&gt;</span> mtcars |&gt; filter(mpg &gt; 20) |&gt; select(mpg, hp, cyl)<br><span class='prompt'>&gt;</span> mtcars |&gt; mutate(kw = hp * 0.746)<br><span class='prompt'>&gt;</span> mtcars |&gt; group_by(cyl) |&gt; summarise(mean_mpg = mean(mpg), n = n())</div><table class='concept-table'><thead><tr><th>Funktion</th><th>Zweck</th></tr></thead><tbody><tr><td><code>filter(Bed.)</code></td><td>Zeilen filtern nach Bedingung</td></tr><tr><td><code>select(col1, col2)</code></td><td>Spalten auswählen</td></tr><tr><td><code>mutate(neu = Formel)</code></td><td>Neue Spalte berechnen</td></tr><tr><td><code>group_by(var)</code></td><td>Gruppieren für summarise()</td></tr><tr><td><code>summarise()</code></td><td>Kennzahlen je Gruppe berechnen</td></tr><tr><td><code>arrange(var)</code></td><td>Sortieren</td></tr></tbody></table>",
+              "visual_type": "code_example",
+              "key_takeaway": "dplyr mit Pipe |> verkettet Transformationen lesbar. filter=Zeilen, select=Spalten, mutate=neue Spalte, group_by+summarise=Kennzahlen."
+            }
+          ]
+        },
+        {
           "unit_id": "ch08_practice_1",
           "unit_type": "practice",
           "title": "Pakete und Daten-Import",
@@ -5052,6 +5097,249 @@
           ]
         },
         {
+          "unit_id": "ch10_concept_diagrams",
+          "unit_type": "concept",
+          "title": "Diagrammtypen im Überblick",
+          "estimated_minutes": 6,
+          "items": [
+            {
+              "type": "concept_card",
+              "title": "Welcher Plot für welche Daten?",
+              "content_html": "<table class='concept-table'><thead><tr><th>Funktion</th><th>Wann?</th><th>Beispiel</th></tr></thead><tbody><tr><td><code>plot(x, y)</code></td><td>Zwei metrische Variablen – Zusammenhang erkunden</td><td><code>plot(mtcars$hp, mtcars$mpg, pch=16, col='blue2')</code></td></tr><tr><td><code>hist(x)</code></td><td>Eine metrische Variable – Verteilungsform</td><td><code>hist(mtcars$hp, col='#ddff6d', breaks=15)</code></td></tr><tr><td><code>boxplot(x ~ g)</code></td><td>Metrische Variable in Gruppen – Vergleich</td><td><code>boxplot(mtcars$mpg ~ mtcars$cyl, col='#ddcc88')</code></td></tr><tr><td><code>barplot(table(x))</code></td><td>Kategorielle Variable – absolute Häufigkeiten</td><td><code>barplot(table(mtcars$cyl), col=rgb(0.66,1,1))</code></td></tr><tr><td><code>pie(table(x))</code></td><td>Kategorielle Variable – Anteile (selten empfohlen)</td><td><code>pie(table(mtcars$cyl))</code></td></tr><tr><td><code>pairs(X)</code></td><td>Mehrere metrische Variablen – alle Paare</td><td><code>pairs(mtcars[,c(1,3,4)], pch=16)</code></td></tr></tbody></table>",
+              "visual_type": "table",
+              "key_takeaway": "hist für Verteilung, boxplot für Gruppenvergleich, plot für Zusammenhang, barplot für Häufigkeiten."
+            }
+          ]
+        },
+        {
+          "unit_id": "ch10_concept_par",
+          "unit_type": "concept",
+          "title": "par() – Grafikparameter",
+          "estimated_minutes": 5,
+          "items": [
+            {
+              "type": "concept_card",
+              "title": "par() und grafische Parameter",
+              "content_html": "<p><code>par()</code> setzt globale Grafikparameter – gilt für alle nachfolgenden Plots.</p><table class='concept-table'><thead><tr><th>Parameter</th><th>Bedeutung</th><th>Beispiel</th></tr></thead><tbody><tr><td><code>mfrow=c(r,c)</code></td><td>r×c-Raster für mehrere Plots (zeilenweise)</td><td><code>par(mfrow=c(3,2))</code></td></tr><tr><td><code>mar=c(b,l,t,r)</code></td><td>Ränder in Zeilen (unten, links, oben, rechts)</td><td><code>par(mar=c(3,3,1,1))</code></td></tr><tr><td><code>cex</code></td><td>Größenfaktor für Texte/Symbole</td><td><code>par(cex=1.5)</code></td></tr><tr><td><code>lwd</code></td><td>Linienbreite (Standard: 1)</td><td><code>plot(..., lwd=2)</code></td></tr><tr><td><code>pch</code></td><td>Plotsymbol: 16=●, 1=○, 4=✕, 15=■</td><td><code>plot(..., pch=16)</code></td></tr><tr><td><code>lty</code></td><td>Linientyp: 1=solid, 2=dashed, 3=dotted</td><td><code>abline(..., lty=2)</code></td></tr></tbody></table><div class='console-sim'><span class='prompt'>&gt;</span> par(mar=c(3,3,1,1), mfrow=c(3,3))<br><span class='prompt'>&gt;</span> for(i in 1:9) plot(x, x^i, ty='l', col='#ff6600', lwd=2)</div><p>Plot als PNG speichern: <code>dev.copy(png, 'Grafik.png', 900, 700, res=100); dev.off()</code></p>",
+              "visual_type": "table",
+              "key_takeaway": "par(mfrow) für Mehrfachplots, mar für Ränder, pch für Symbole, lty für Linientypen. dev.copy+dev.off zum Speichern."
+            }
+          ]
+        },
+        {
+          "unit_id": "ch10_concept_colors",
+          "unit_type": "concept",
+          "title": "Farben in R",
+          "estimated_minutes": 4,
+          "items": [
+            {
+              "type": "concept_card",
+              "title": "Vier Wege, Farben anzugeben",
+              "content_html": "<table class='concept-table'><thead><tr><th>Methode</th><th>Syntax</th><th>Beispiel</th></tr></thead><tbody><tr><td>Farbnummer</td><td><code>col=1:8</code></td><td>1=schwarz, 2=rot, 3=grün, …</td></tr><tr><td>Farbname</td><td><code>col='olivedrab2'</code></td><td><code>colors()</code> listet alle 657 Namen</td></tr><tr><td>Hex (mit Alpha)</td><td><code>col='#0000aa22'</code></td><td>#RRGGBBAA – AA=Transparenz (ff=opak, 00=transparent)</td></tr><tr><td>rgb()</td><td><code>col=rgb(0.5,1,1,0.5)</code></td><td>Werte 0–1 für R,G,B und Alpha</td></tr></tbody></table><div class='console-sim'><span class='prompt'>&gt;</span> plot(x, col=1:10, pch=16, cex=3)  <span class='comment'># Farbnummern</span><br><span class='prompt'>&gt;</span> rect(0,0,1,1, col=rgb(0.5,1,1,0.5))  <span class='comment'># RGB mit Alpha</span></div>",
+              "visual_type": "table",
+              "key_takeaway": "colors() zeigt alle Namen. #RRGGBBAA erlaubt Transparenz. rgb(r,g,b,alpha) für numerische Kontrolle."
+            }
+          ]
+        },
+        {
+          "unit_id": "ch10_concept_decorate",
+          "unit_type": "concept",
+          "title": "Plot dekorieren: abline, text, legend",
+          "estimated_minutes": 4,
+          "items": [
+            {
+              "type": "concept_card",
+              "title": "Elemente zum bestehenden Plot hinzufügen",
+              "content_html": "<p>Alle folgenden Funktionen fügen zu einem <em>bestehenden</em> Plot hinzu (kein neuer Plot):</p><div class='console-sim'><span class='prompt'>&gt;</span> abline(h=0)              <span class='comment'># horizontale Linie</span><br><span class='prompt'>&gt;</span> abline(v=5, lty=2)       <span class='comment'># gestrichelte vertikale Linie</span><br><span class='prompt'>&gt;</span> abline(a=2, b=0.5)       <span class='comment'># Gerade y=2+0.5x</span><br><span class='prompt'>&gt;</span> lines(x, sin(x), col='red', lwd=2)   <span class='comment'># Kurve</span><br><span class='prompt'>&gt;</span> points(px, py, pch=4, col='blue')    <span class='comment'># Einzelpunkte</span><br><span class='prompt'>&gt;</span> text(0, 0, 'Ursprung', pos=1)        <span class='comment'># Text (pos: 1=unten, 2=links, 3=oben, 4=rechts)</span><br><span class='prompt'>&gt;</span> legend('topright', legend=c('A','B'), col=c('red','blue'), lty=1)</div>",
+              "visual_type": "code_example",
+              "key_takeaway": "abline: Geraden/Linien. lines: Kurven. points: Einzelpunkte. text: Beschriftung. legend: Legende. Alle ergänzen den bestehenden Plot."
+            }
+          ]
+        },
+        {
+          "unit_id": "ch10_practice_4",
+          "unit_type": "practice",
+          "title": "Grafik lesen & reproduzieren",
+          "estimated_minutes": 15,
+          "items": [
+            {
+              "id": "ch10_p4_q01",
+              "difficulty": 1,
+              "priority": "high",
+              "type": "multiple_choice",
+              "context": "Du hast Messwerte in Gruppen und willst Median, IQR und Ausreißer aller Gruppen gleichzeitig sehen.",
+              "question": "Welcher Befehl erzeugt gruppierte Boxplots für mpg je Zylinderanzahl?",
+              "code_snippet": null,
+              "options": [
+                "boxplot(mtcars$mpg ~ mtcars$cyl)",
+                "hist(mtcars$mpg, by=mtcars$cyl)",
+                "barplot(mtcars$mpg, mtcars$cyl)",
+                "plot(mtcars$cyl, mtcars$mpg, type='box')"
+              ],
+              "correct": "boxplot(mtcars$mpg ~ mtcars$cyl)",
+              "explanation": "boxplot(y ~ gruppe) verwendet die Formelschreibweise: y ist die metrische Variable, gruppe die Gruppierungsvariable. Für jede Gruppe (4/6/8 Zylinder) wird ein separater Boxplot gezeichnet. hist() hat keinen by-Parameter. barplot() erwartet Häufigkeiten.",
+              "hint": "Boxplot mit Formelnotation: y ~ gruppe.",
+              "visual": null,
+              "times_seen": 0,
+              "times_correct": 0,
+              "last_result": null
+            },
+            {
+              "id": "ch10_p4_q02",
+              "difficulty": 2,
+              "priority": "high",
+              "type": "multiple_choice",
+              "context": "Du willst 6 Plots in einem 3×2-Raster darstellen (3 Zeilen, 2 Spalten).",
+              "question": "Wie lautet der par()-Aufruf?",
+              "code_snippet": "par(___)\nfor (i in 1:3) {\n  hist(Wert[Gruppe == i])\n  qqnorm(Wert[Gruppe == i])\n}",
+              "options": [
+                "par(mfrow=c(3,2))",
+                "par(mfrow=c(2,3))",
+                "par(mfcol=c(6,1))",
+                "par(layout=c(3,2))"
+              ],
+              "correct": "par(mfrow=c(3,2))",
+              "explanation": "mfrow=c(3,2): 3 Zeilen, 2 Spalten = 6 Subplots. Die Plots werden zeilenweise befüllt: zuerst Zeile 1 (Spalten 1&2), dann Zeile 2, etc. mfrow=c(2,3) würde 2 Zeilen × 3 Spalten = 6 Plots in anderem Layout geben.",
+              "hint": "mfrow=c(Zeilen, Spalten). 3 Gruppen × 2 Plots je Gruppe = 6 gesamt.",
+              "visual": null,
+              "times_seen": 0,
+              "times_correct": 0,
+              "last_result": null
+            },
+            {
+              "id": "ch10_p4_q03",
+              "difficulty": 2,
+              "priority": "high",
+              "type": "code_output",
+              "context": "Farben in R – Streudiagramm mit Gruppenfarben.",
+              "question": "Was bewirkt col=X$Month in diesem plot()-Aufruf?",
+              "code_snippet": "X <- airquality\nplot(X$Temp, X$Wind,\n     col  = X$Month,\n     pch  = 16,\n     xlab = 'Temperatur',\n     ylab = 'Wind')",
+              "options": [
+                "Punkte werden nach Monat eingefärbt (Monat 5=grün, 6=rot, ...)",
+                "Alle Punkte erhalten die Farbe mit Index X$Month (alle gleich)",
+                "Fehler: col erwartet einen Farbstring",
+                "Punkte werden nach Wind-Stärke eingefärbt"
+              ],
+              "correct": "Punkte werden nach Monat eingefärbt (Monat 5=grün, 6=rot, ...)",
+              "explanation": "Wenn col= ein numerischer Vektor ist, wird jeder Wert als Farbindex interpretiert. col=5 = türkis (Farbnummer 5). Da X$Month die Werte 5,6,7,8,9 enthält, bekommen die Monate die R-Standardfarben 5–9. Für eine saubere Legende: legend('topright', legend=5:9, col=5:9, pch=16).",
+              "hint": "R-Farbnummern: 1=schwarz, 2=rot, 3=grün, 4=blau, 5=türkis, ...",
+              "visual": null,
+              "times_seen": 0,
+              "times_correct": 0,
+              "last_result": null
+            },
+            {
+              "id": "ch10_p4_q04",
+              "difficulty": 2,
+              "priority": "high",
+              "type": "multiple_choice",
+              "context": "Grafik dekorieren: Du hast ein Streudiagramm und willst drei Elemente hinzufügen.",
+              "question": "Welche Zeile fügt korrekt eine gestrichelte horizontale Linie bei y=0 ein?",
+              "code_snippet": "plot(x, y)\n# gestrichelte Linie bei y=0:\n___",
+              "options": [
+                "abline(h=0, lty=2)",
+                "lines(0, lty=2)",
+                "abline(y=0, type='dashed')",
+                "hline(0, lty=2)"
+              ],
+              "correct": "abline(h=0, lty=2)",
+              "explanation": "abline(h=0) zeichnet eine horizontale Linie bei y=0. lty=2 macht sie gestrichelt (1=solid, 2=dashed, 3=dotted). Für vertikale Linien: abline(v=5). Für Geraden: abline(a=intercept, b=slope). lines(0) würde einen Punkt zeichnen, nicht eine Linie.",
+              "hint": "abline: h=horizontal, v=vertikal. lty=2 ist gestrichelt.",
+              "visual": null,
+              "times_seen": 0,
+              "times_correct": 0,
+              "last_result": null
+            },
+            {
+              "id": "ch10_p4_q05",
+              "difficulty": 3,
+              "priority": "high",
+              "type": "multiple_choice",
+              "context": "Plot.r: Manuelle Kurve mit Punkten und Linien.",
+              "question": "Du hast x=-5:5, y=sin(x). Welcher Code zeichnet zuerst einen leeren Rahmen, dann rote Punkte und pink Linie?",
+              "code_snippet": null,
+              "options": [
+                "plot(x,y,ty='n'); lines(x,y,col='pink',lwd=2); points(x,y,pch=16,col='red')",
+                "plot(x,y,col='pink'); points(x,y,col='red')",
+                "lines(x,y,col='pink'); points(x,y,pch=16,col='red')",
+                "plot(x,y,ty='l',col='pink'); plot(x,y,pch=16,col='red')"
+              ],
+              "correct": "plot(x,y,ty='n'); lines(x,y,col='pink',lwd=2); points(x,y,pch=16,col='red')",
+              "explanation": "ty='n' (type='n') erstellt leeren Achsenrahmen ohne Zeichenelemente. Dann lines() für die Kurve, points() für die Punkte oben drauf. Der letzte plot()-Aufruf würde ein neues Fenster öffnen und das erste überschreiben.",
+              "hint": "type='n' = kein Inhalt, nur Achsen. Dann schrittweise mit lines() und points() aufbauen.",
+              "visual": null,
+              "times_seen": 0,
+              "times_correct": 0,
+              "last_result": null
+            },
+            {
+              "id": "ch10_p4_q06",
+              "difficulty": 1,
+              "priority": "medium",
+              "type": "multiple_choice",
+              "context": "Du hast einen Plot erstellt und willst ihn als PNG-Datei speichern.",
+              "question": "Welcher Befehlsblock speichert die aktuelle Grafik korrekt?",
+              "code_snippet": null,
+              "options": [
+                "dev.copy(png,'plot.png',900,700,res=100); dev.off()",
+                "save(plot,'plot.png')",
+                "png('plot.png'); dev.off()",
+                "export.plot('plot.png', format='png')"
+              ],
+              "correct": "dev.copy(png,'plot.png',900,700,res=100); dev.off()",
+              "explanation": "dev.copy() kopiert den aktuellen Plot auf ein neues Gerät (hier PNG). dev.off() schließt das Gerät und schreibt die Datei. Alternativ: png('plot.png'); ...[plot-code]...; dev.off() – aber dann muss der Plot neu gezeichnet werden. save() speichert R-Objekte, nicht Grafiken.",
+              "hint": "dev.copy() + dev.off() ist der 'nachträglich speichern'-Weg in R.",
+              "visual": null,
+              "times_seen": 0,
+              "times_correct": 0,
+              "last_result": null
+            },
+            {
+              "id": "ch10_p4_q07",
+              "difficulty": 2,
+              "priority": "high",
+              "type": "interpret_conclude",
+              "context": "pairs(mtcars[, c(1,3,4)]) erzeugt eine Streudiagramm-Matrix.",
+              "question": "Was zeigt pairs() und wann ist es sinnvoll?",
+              "options": [
+                "Alle paarweisen Streudiagramme – sinnvoll für explorative Analyse mehrerer Variablen",
+                "Paarweise t-Tests – sinnvoll für Gruppenvergleiche",
+                "Korrelationskoeffizienten als Matrix – sinnvoll statt cor()",
+                "Häufigkeitstabellen aller Variablenpaare"
+              ],
+              "correct": "Alle paarweisen Streudiagramme – sinnvoll für explorative Analyse mehrerer Variablen",
+              "explanation": "pairs(X) erzeugt eine (n×n)-Matrix von Streudiagrammen für alle Spaltenpaare von X. Diagonal: Variablenname. Jede Zelle zeigt plot(Xi, Xj). Ideal zur schnellen explorativen Analyse: Gibt es lineare Zusammenhänge? Welche Variablen korrelieren? Erster Schritt vor cor() oder lm().",
+              "hint": "pairs = 'alle paarweisen Kombinationen als Streudiagramme'.",
+              "visual": null,
+              "times_seen": 0,
+              "times_correct": 0,
+              "last_result": null
+            },
+            {
+              "id": "ch10_p4_q08",
+              "difficulty": 3,
+              "priority": "high",
+              "type": "multiple_choice",
+              "context": "R-Grafik: pch-Symbole.",
+              "question": "Wie kannst du alle 26 verfügbaren pch-Symbole in einem Plot sehen?",
+              "code_snippet": "# Welcher Code zeigt pch 0 bis 25 in blau mit gelbem Hintergrund?",
+              "options": [
+                "plot(0:25, (0:25)*0, pch=0:25, cex=1.5, col='blue', bg='yellow')",
+                "plot(pch=0:25)",
+                "symbols(0:25, type='pch')",
+                "barplot(0:25, col='blue')"
+              ],
+              "correct": "plot(0:25, (0:25)*0, pch=0:25, cex=1.5, col='blue', bg='yellow')",
+              "explanation": "(0:25)*0 erzeugt y=0 für alle Punkte, sodass alle auf einer Linie stehen. pch=0:25 weist jedem Punkt ein anderes Symbol zu. bg='yellow' füllt die ausfüllbaren Symbole (pch 21-25) gelb. cex=1.5 vergrößert die Symbole zur besseren Sichtbarkeit.",
+              "hint": "y=0 für alle Punkte (als Vektor), dann pch=0:25 für alle Symbole.",
+              "visual": null,
+              "times_seen": 0,
+              "times_correct": 0,
+              "last_result": null
+            }
+          ]
+        },
+        {
           "unit_id": "ch10_summary",
           "unit_type": "summary",
           "title": "Kapitel 10 abgeschlossen",
@@ -6243,6 +6531,21 @@
           ]
         },
         {
+          "unit_id": "ch13_concept_log",
+          "unit_type": "concept",
+          "title": "Logarithmusgesetze & log10 in R",
+          "estimated_minutes": 4,
+          "items": [
+            {
+              "type": "concept_card",
+              "title": "Potenz- und Logarithmusgesetze (Aufgabe 23)",
+              "content_html": "<p>In R bezeichnet <code>log(x)</code> den natürlichen Logarithmus (ln), <code>log10(x)</code> den dekadischen Logarithmus. Die Basis b muss > 0 sein.</p><table class='concept-table'><thead><tr><th>Ausdruck</th><th>Vereinfachung</th></tr></thead><tbody><tr><td>b<sup>−x</sup></td><td>1 / b<sup>x</sup></td></tr><tr><td>b<sup>x+y</sup></td><td>b<sup>x</sup> · b<sup>y</sup></td></tr><tr><td>(x + y)<sup>b</sup></td><td>–– (keine Vereinfachung)</td></tr><tr><td>(b<sup>x</sup>)<sup>y</sup></td><td>b<sup>x·y</sup></td></tr><tr><td>log<sub>b</sub>(x·y)</td><td>log<sub>b</sub>(x) + log<sub>b</sub>(y)</td></tr><tr><td>log<sub>b</sub>(x + y)</td><td>–– (keine Vereinfachung)</td></tr><tr><td>log<sub>b</sub>(b<sup>x</sup>)</td><td>x</td></tr><tr><td>log<sub>b</sub>(x<sup>b</sup>)</td><td>b · log<sub>b</sub>(x)</td></tr></tbody></table><p>Anwendung: Bei rechts-schiefen Daten (z.B. Einkommen, Einwohnerzahl) transformiert man mit log10 für eine annähernd symmetrische Verteilung, die Normalverteilungsvoraussetzungen besser erfüllt.</p>",
+              "visual_type": "table",
+              "key_takeaway": "b^(x+y) = b^x · b^y. log(xy) = log(x)+log(y). log(b^x) = x. log10() für Dezimalsystem."
+            }
+          ]
+        },
+        {
           "unit_id": "ch13_practice_1",
           "unit_type": "practice",
           "title": "Hypothesentests interpretieren",
@@ -6501,6 +6804,72 @@
               "correct": "Die Differenz ist bei α=0.05 nicht signifikant von 0 verschieden",
               "explanation": "KI enthält 0 ↔ zweiseitiger Test p > 0.05 bei gleichem α. Die 0 (= kein Effekt) ist mit den Daten kompatibel. Das bedeutet NICHT, dass der Effekt 0 ist – nur dass wir keine signifikante Evidenz haben.",
               "hint": "KI enthält 0 ↔ p > α. Keine Signifikanz, nicht: kein Effekt.",
+              "visual": null,
+              "times_seen": 0,
+              "times_correct": 0,
+              "last_result": null
+            },
+            {
+              "id": "ch13_p3_q03",
+              "difficulty": 2,
+              "priority": "high",
+              "type": "interpret_conclude",
+              "context": "Aufgabe 22 (V9): Bahnbetreiber – höchstens 10% aller Züge verspätet. Stichprobe n=35, davon 5 verspätet.",
+              "question": "binom.test(5, 35, 0.10, alternative='greater'). Was ist H0 und was schließt du bei p=0.41?",
+              "code_snippet": "> binom.test(5, 35, 0.10, alternative='greater')\n\nExact binomial test\n\nnumber of successes = 5, number of trials = 35, p-value = 0.41\nalternative hypothesis: true probability of success is greater than 0.1\n95 percent confidence interval:\n 0.047  1.000",
+              "options": [
+                "H0: p ≤ 0.10. p=0.41 > 0.05 → H0 nicht ablehnen: kein Beweis für Verspätungsrate > 10%",
+                "H0: p = 0.10. p=0.41 > 0.05 → H0 ablehnen: Züge sind signifikant pünktlich",
+                "H0: p ≥ 0.10. p=0.41 < 0.05 → H0 ablehnen: zu viele Verspätungen",
+                "p=0.41 → 41% Verspätungsrate"
+              ],
+              "correct": "H0: p ≤ 0.10. p=0.41 > 0.05 → H0 nicht ablehnen: kein Beweis für Verspätungsrate > 10%",
+              "explanation": "H0: p ≤ 0.10 (Behauptung des Bahnbetreibers). H1: p > 0.10 (rechtsseitig, 'greater'). p = 0.41 >> 0.05 → H0 wird NICHT abgelehnt: Die Daten (5/35 = 14% verspätet) liefern keinen ausreichenden Beweis, dass p > 10%. Die Aussage des Bahnbetreibers ist mit den Daten kompatibel.",
+              "hint": "alternative='greater' → H1: p > p0. H0 ist das Gegenteil: p ≤ p0. p > α → H0 nicht ablehnen.",
+              "visual": null,
+              "times_seen": 0,
+              "times_correct": 0,
+              "last_result": null
+            },
+            {
+              "id": "ch13_p3_q04",
+              "difficulty": 2,
+              "priority": "high",
+              "type": "multiple_choice",
+              "context": "Aufgabe 23 (V9): Logarithmusgesetze. b > 0, x,y > 0.",
+              "question": "Welche Vereinfachung ist korrekt?",
+              "code_snippet": "# Wähle die korrekte alternative Darstellung:",
+              "options": [
+                "log_b(x · y) = log_b(x) + log_b(y)",
+                "log_b(x + y) = log_b(x) + log_b(y)",
+                "b^(x+y) = b^x + b^y",
+                "log_b(b^x) = b^x"
+              ],
+              "correct": "log_b(x · y) = log_b(x) + log_b(y)",
+              "explanation": "log(x·y) = log(x) + log(y): Logarithmus eines Produkts = Summe der Logarithmen. FEHLER: log(x+y) ≠ log(x)+log(y). b^(x+y) = b^x · b^y (Multiplikation, nicht Addition). log_b(b^x) = x (Logarithmus hebt Potenz auf).",
+              "hint": "log(Produkt) = Summe der Logs. log(Summe) hat keine einfache Vereinfachung.",
+              "visual": null,
+              "times_seen": 0,
+              "times_correct": 0,
+              "last_result": null
+            },
+            {
+              "id": "ch13_p3_q05",
+              "difficulty": 3,
+              "priority": "high",
+              "type": "interpret_conclude",
+              "context": "Aufgabe 25 (V9): exam_grades – Differenz exam2 − exam3. Mittelwert = −3, SE = 1.2, n = 50.",
+              "question": "t.test(exam2 - exam3): t = −2.5, p = 0.016. Außerdem: power.t.test(delta=3, sd=8, power=0.85). Was ist die Frage und das Ergebnis?",
+              "code_snippet": "> t.test(exam2 - exam3)\nt = -2.5, df = 49, p-value = 0.016\n95 percent confidence interval: -5.40 -0.60\n\n> power.t.test(delta=3, sd=8, power=0.85)\n     n = 76.3",
+              "options": [
+                "H0: μ(diff)=0 ablehnen (p<0.05); für Power 85% bei Δ=3 werden n≈77 Personen benötigt",
+                "H0 nicht ablehnen (p=0.016 zu klein); n=76 ist bereits ausreichend",
+                "Der t-Test ist ungültig, da exam2 und exam3 korreliert sind",
+                "power.t.test berechnet die Power, nicht n; Ergebnis = 85%"
+              ],
+              "correct": "H0: μ(diff)=0 ablehnen (p<0.05); für Power 85% bei Δ=3 werden n≈77 Personen benötigt",
+              "explanation": "t-Test: p = 0.016 < α = 0.05 → H0 (kein Unterschied) ablehnen. Im Mittel ist exam2 um 3 Punkte schlechter als exam3. KI [-5.4, -0.6] enthält keine 0. power.t.test(): fehlendes Argument = n → berechnet benötigtes n. Für Power=85% bei tatsächlicher Differenz Δ=3 und SD=8 braucht man n ≈ 77 Personen.",
+              "hint": "Das fehlende Argument in power.t.test() wird berechnet. Hier fehlt n → n wird ausgegeben.",
               "visual": null,
               "times_seen": 0,
               "times_correct": 0,
@@ -6891,6 +7260,36 @@
               "content_html": "<div class='code-split'><div class='code-left'><pre><code>K &lt;- 1:6\nQ &lt;- c()\nfor (g in K) {\n  m &lt;- lm(s ~ poly(t, g, raw=T))\n  Q[g] &lt;- summary(m)$r.squared\n}\nplot(K, Q, ty='o')</code></pre></div><div class='code-right'><div class='diagram-box'><strong>Modellwahl:</strong><br>Wähle kleinsten Grad g,<br>bei dem R² nicht mehr<br>stark steigt.<br><br>Overfitting vermeiden!</div></div></div>",
               "visual_type": "code_example",
               "key_takeaway": "poly(t, g, raw=TRUE) erzeugt Polynomterme bis Grad g. Modellwahl: niedrigster Grad mit hohem R²."
+            }
+          ]
+        },
+        {
+          "unit_id": "ch14_concept_chi",
+          "unit_type": "concept",
+          "title": "Chi-Quadrat-Unabhängigkeitstest",
+          "estimated_minutes": 5,
+          "items": [
+            {
+              "type": "concept_card",
+              "title": "chisq.test() – Unabhängigkeit zweier Merkmale",
+              "content_html": "<p>Bei zwei kategorialen Merkmalen (z.B. Geschlecht × Studienrichtung) prüft der <strong>Chi-Quadrat-Unabhängigkeitstest</strong>, ob die beiden Merkmale statistisch unabhängig voneinander sind.</p><p><strong>Voraussetzung:</strong> Mindestens 5 Beobachtungen in jeder Zelle der Kontingenztabelle (<code>table()</code> zur Überprüfung).</p><table class='concept-table'><thead><tr><th></th><th>H₀</th><th>H₁</th></tr></thead><tbody><tr><td>Hypothesen</td><td>Merkmale sind unabhängig</td><td>Merkmale sind abhängig (assoziiert)</td></tr></tbody></table><div class='console-sim'><span class='prompt'>&gt;</span> tab &lt;- table(Geschlecht, Studienrichtung)<br><span class='prompt'>&gt;</span> chisq.test(tab)<br><span class='output'>Chi-squared test for given probabilities<br>X-squared = 5.32, df = 2, p-value = 0.07</span></div><p>p &lt; α → H₀ ablehnen: Merkmale sind <strong>nicht</strong> unabhängig (assoziiert).<br>p ≥ α → keine signifikante Assoziation nachweisbar.</p>",
+              "visual_type": "console",
+              "key_takeaway": "chisq.test(table(A,B)): testet Unabhängigkeit zweier kategorialer Merkmale. Voraussetzung: ≥5 Beobachtungen je Zelle."
+            }
+          ]
+        },
+        {
+          "unit_id": "ch14_concept_ttest2",
+          "unit_type": "concept",
+          "title": "Zweistichproben-t-Test",
+          "estimated_minutes": 5,
+          "items": [
+            {
+              "type": "concept_card",
+              "title": "t.test(x, y) – Zwei Gruppen vergleichen",
+              "content_html": "<p>Der <strong>Zweistichproben-t-Test</strong> vergleicht die Erwartungswerte zweier Stichproben x und y.</p><table class='concept-table'><thead><tr><th>Variante</th><th>Wann?</th><th>R-Befehl</th></tr></thead><tbody><tr><td><strong>Gepaart</strong></td><td>Dieselben Subjekte, zwei Messungen (z.B. vorher/nachher)</td><td><code>t.test(x, y, paired=TRUE)</code><br>oder <code>t.test(x−g)</code> mit Gruppenvar.</td></tr><tr><td><strong>Ungepaart</strong></td><td>Zwei unabhängige Stichproben</td><td><code>t.test(x, y)</code></td></tr></tbody></table><p>Der <strong>gepaarte Test</strong> testet ob die mittlere Differenz der Paare null ist (= Einstichproben-t-Test auf die Differenz). Er ist mächtiger wenn Paare korreliert sind.</p><div class='console-sim'><span class='prompt'>&gt;</span> t.test(exam2 - exam3)  <span class='comment'># gepaarter Test auf Differenz</span><br><span class='prompt'>&gt;</span> t.test(noten ~ gruppe, data=df)  <span class='comment'># mit Gruppenvariable</span></div>",
+              "visual_type": "table",
+              "key_takeaway": "paired=TRUE für abhängige Messungen (Vorher/Nachher). t.test(x,y) für unabhängige Gruppen. Beide testen H₀: μ₁ = μ₂."
             }
           ]
         },
@@ -7419,6 +7818,50 @@
               "correct": "TukeyHSD",
               "explanation": "TukeyHSD(aov_objekt) führt den Tukey Honest Significant Difference Test durch. Er vergleicht alle Paare von Gruppen unter Kontrolle des multiplen Testproblems. pairwise.t.test() wäre eine Alternative mit p-Wert-Korrektur (z.B. Bonferroni). post.hoc() existiert nicht in R.",
               "hint": "Tukey = standard Post-hoc nach ANOVA. Für paarweise Vergleiche aller Gruppen.",
+              "visual": null,
+              "times_seen": 0,
+              "times_correct": 0,
+              "last_result": null
+            },
+            {
+              "id": "ch14_ex_q_chi01",
+              "type": "multiple_choice",
+              "difficulty": 2,
+              "priority": "high",
+              "context": "Chi-Quadrat-Test: Studierendenbefragung zu Geschlecht und Abschlussart.",
+              "question": "tab <- table(Geschlecht, Abschluss); chisq.test(tab). Was testet dieser Test?",
+              "code_snippet": "> chisq.test(table(Geschlecht, Abschluss))\n\nPearson's Chi-squared test\nX-squared = 2.14, df = 1, p-value = 0.143",
+              "options": [
+                "Ob Geschlecht und Abschlussart statistisch unabhängig sind (H0: unabhängig)",
+                "Ob die Mittelwerte von Geschlecht und Abschluss gleich sind",
+                "Ob die Varianzen in den beiden Gruppen gleich sind",
+                "Ob mind. 5 Beobachtungen je Gruppe vorliegen"
+              ],
+              "correct": "Ob Geschlecht und Abschlussart statistisch unabhängig sind (H0: unabhängig)",
+              "explanation": "chisq.test() auf eine Kontingenztabelle testet Unabhängigkeit: H0: Merkmale sind unabhängig. p = 0.143 > 0.05 → H0 nicht ablehnen: keine signifikante Assoziation zwischen Geschlecht und Abschlussart. Voraussetzung: ≥5 Beobachtungen je Zelle der Tabelle (mit table() prüfen).",
+              "hint": "Chi-Quadrat auf table() = Unabhängigkeitstest zweier kategorialer Merkmale.",
+              "visual": null,
+              "times_seen": 0,
+              "times_correct": 0,
+              "last_result": null
+            },
+            {
+              "id": "ch14_ex_q_chi02",
+              "type": "interpret_conclude",
+              "difficulty": 3,
+              "priority": "high",
+              "context": "Aufgabe 26 (V10): Zweistichproben-t-Test auf exam_grades.",
+              "question": "t.test(exam2, exam3, paired=TRUE): t=-2.3, p=0.026. Was schließt du?",
+              "code_snippet": "> diff <- exam2 - exam3\n> t.test(diff)  # oder t.test(exam2, exam3, paired=TRUE)\n\nt = -2.302, df = 49, p-value = 0.026\nalternative hypothesis: true mean is not equal to 0\n95 percent confidence interval:\n -5.62  -0.38",
+              "options": [
+                "H0 ablehnen: exam2 und exam3 haben im Mittel signifikant verschiedene Werte (p < 0.05)",
+                "H0 nicht ablehnen: p = 0.026 ist zu nahe an 0.05",
+                "Kein Unterschied: KI ist symmetrisch um 0",
+                "Gepaarter Test ungültig – Stichproben sind unabhängig"
+              ],
+              "correct": "H0 ablehnen: exam2 und exam3 haben im Mittel signifikant verschiedene Werte (p < 0.05)",
+              "explanation": "Gepaarter t-Test testet H0: μ(diff) = 0. p = 0.026 < α = 0.05 → H0 ablehnen: mittlere Differenz signifikant ≠ 0. KI [-5.62, -0.38] enthält keine 0 → bestätigt Signifikanz. Beide Aussagen (p < α und KI enthält keine 0) sind äquivalent.",
+              "hint": "Gepaarter Test = Einstichproben-t-Test auf die Differenz. KI enthält keine 0 ↔ p < α.",
               "visual": null,
               "times_seen": 0,
               "times_correct": 0,
@@ -8095,6 +8538,424 @@
           "unit_id": "ch15_summary",
           "unit_type": "summary",
           "title": "Kapitel 15 abgeschlossen",
+          "estimated_minutes": 1,
+          "items": []
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch_v11",
+      "title": "Voraussetzungen & Einfache Regression",
+      "description": "Q-Q-Plot, Levene-Test, Regressionsmodell, KQ-Schätzer, R², lm()",
+      "lecture": "V11",
+      "priority": "high",
+      "unlocked": false,
+      "completed": false,
+      "units": [
+        {
+          "unit_id": "ch_v11_concept_0",
+          "unit_type": "concept",
+          "title": "Voraussetzungen für Hypothesentests",
+          "estimated_minutes": 5,
+          "items": [
+            {
+              "type": "concept_card",
+              "title": "Wann gelten Tests – Voraussetzungen",
+              "content_html": "<p>Damit Hypothesentests zuverlässig funktionieren (Fehler 1. Art ≤ α), müssen die Daten bestimmte Voraussetzungen erfüllen.</p><table class='concept-table'><thead><tr><th>Test</th><th>Voraussetzungen</th><th>Wie prüfen?</th></tr></thead><tbody><tr><td>Korrelationstest</td><td>Normalverteilung oder n &gt; 30</td><td>Q-Q-Plot mit <code>qqnorm()</code></td></tr><tr><td>t-Tests</td><td>Normalverteilung oder n &gt; 30 und symmetrische Verteilung</td><td><code>hist()</code>, <code>qqnorm()</code></td></tr><tr><td>Chi-Quadrat-Test</td><td>Mindestens 5 Beobachtungen je Zelle</td><td><code>table()</code></td></tr><tr><td>ANOVA</td><td>Normalverteilung je Gruppe oder n &gt; 30, gleiche Varianzen</td><td><code>qqnorm()</code>, <code>leveneTest()</code></td></tr></tbody></table>",
+              "visual_type": "table",
+              "key_takeaway": "Jeder Test hat Voraussetzungen. Ohne Prüfung können p-Werte irreführend sein."
+            }
+          ]
+        },
+        {
+          "unit_id": "ch_v11_concept_1",
+          "unit_type": "concept",
+          "title": "Q-Q-Plot & Levene-Test in R",
+          "estimated_minutes": 5,
+          "items": [
+            {
+              "type": "concept_card",
+              "title": "Normalverteilung prüfen: qqnorm() + qqline()",
+              "content_html": "<p><code>qqnorm(x)</code> zeichnet empirische Quantile von <code>x</code> gegen theoretische Normalverteilungsquantile. <code>qqline(x)</code> fügt die Referenzgerade hinzu.</p><div class='console-sim'><span class='prompt'>&gt;</span> qqnorm(Wert[Gruppe == 1])<br><span class='prompt'>&gt;</span> qqline(Wert[Gruppe == 1])</div><p><strong>Symmetrisch (≈ Normalverteilt):</strong> Punkte liegen nah an der Geraden.<br><strong>Schief:</strong> Punkte weichen an den Rändern stark ab.</p><hr/><p><strong>Levene-Test</strong> (Paket <code>car</code>) prüft Homogenität der Varianzen in Gruppen (H₀: Varianzen sind gleich):</p><div class='console-sim'><span class='prompt'>&gt;</span> library(car)<br><span class='prompt'>&gt;</span> leveneTest(Wert, Gruppe)</div>",
+              "visual_type": "code_example",
+              "key_takeaway": "qqnorm() + qqline(): Normalverteilung prüfen. leveneTest(): Varianzgleichheit in Gruppen (Voraussetzung ANOVA)."
+            }
+          ]
+        },
+        {
+          "unit_id": "ch_v11_concept_2",
+          "unit_type": "concept",
+          "title": "Das einfache lineare Regressionsmodell",
+          "estimated_minutes": 5,
+          "items": [
+            {
+              "type": "concept_card",
+              "title": "y = b₀ + b₁·x + ε",
+              "content_html": "<p>Wenn x kausal auf y wirkt und beide linear korreliert sind (cor.test signifikant), modellieren wir:</p><div class='formula-box'>y = b₀ + b₁ · x + ε</div><ul><li><strong>y</strong>: abhängige Variable (Response)</li><li><strong>x</strong>: unabhängige Variable (Prädiktor)</li><li><strong>b₀</strong> (Intercept / Konstante): y-Achsenabschnitt – y-Wert wenn x = 0</li><li><strong>b₁</strong> (Steigung): Änderung von y pro Einheit x</li><li><strong>ε</strong>: zufälliger Fehler, E(ε) = 0</li></ul><p>Damit gilt für den Erwartungswert: <strong>E(y) = b₀ + b₁·x</strong></p>",
+              "visual_type": "diagram",
+              "key_takeaway": "Regression modelliert den Erwartungswert von y als Funktion von x. ε ist der Restfehler mit E(ε)=0."
+            }
+          ]
+        },
+        {
+          "unit_id": "ch_v11_concept_3",
+          "unit_type": "concept",
+          "title": "Kleinste-Quadrate-Schätzer",
+          "estimated_minutes": 6,
+          "items": [
+            {
+              "type": "concept_card",
+              "title": "KQ-Schätzung: b₁ und b₀",
+              "content_html": "<p><strong>Residuen</strong> sind die beobachteten Fehler: εᵢ = yᵢ − (b₀ + b₁·xᵢ)</p><p>Die KQ-Schätzung minimiert die <strong>Residuenquadratsumme</strong>:</p><div class='formula-box'>S² = Σ εᵢ² = Σ (yᵢ − (b₀ + b₁·xᵢ))²  →  minimal!</div><p>Die optimalen Schätzer sind:</p><div class='formula-box'>b₁ = r(x,y) · s(y)/s(x)<br>b₀ = ȳ − b₁ · x̄</div><p>Dabei ist r(x,y) der Pearson-Korrelationskoeffizient, s(x) und s(y) die Standardabweichungen.<br>Der Datenmittelpunkt (x̄, ȳ) liegt immer auf der Regressionsgeraden.</p>",
+              "visual_type": "diagram",
+              "key_takeaway": "KQ wählt b₀, b₁ so, dass Σεᵢ² minimal. Formel: b₁ = r · s(y)/s(x), b₀ = ȳ − b₁·x̄."
+            }
+          ]
+        },
+        {
+          "unit_id": "ch_v11_concept_4",
+          "unit_type": "concept",
+          "title": "Nullmodell, R² und T-Tests",
+          "estimated_minutes": 5,
+          "items": [
+            {
+              "type": "concept_card",
+              "title": "R² = r(x,y)² – Güte des Modells",
+              "content_html": "<p>Das <strong>Nullmodell</strong> sagt immer ȳ voraus (keine Information aus x): S²_null ist die Streuung der y-Werte um ȳ.</p><p>Das lineare Modell reduziert diese Streuung. Der <strong>Anteil der erklärten Varianz</strong> ist:</p><div class='formula-box'>R² = (S²_null − S²) / S²_null = 1 − S²/S²_null</div><p>Im einfachen linearen Modell gilt: <strong>R² = r(x,y)²</strong></p><p>Für die Koeffizienten gibt es <strong>T-Tests</strong> (falls ε normalverteilt):</p><table class='concept-table'><thead><tr><th></th><th>Test für b₀</th><th>Test für b₁</th></tr></thead><tbody><tr><td>H₀</td><td>b₀ = 0</td><td>b₁ = 0</td></tr><tr><td>Bei Nicht-Ablehnung</td><td>y = b₁·x (kein Intercept)</td><td>Nullmodell reicht</td></tr></tbody></table><p><code>summary(lm(...))</code> liefert R², Standardfehler und p-Werte der T-Tests.</p>",
+              "visual_type": "table",
+              "key_takeaway": "R² nahe 1: Modell erklärt viel. Ablehnung H₀(b₁=0): x hat signifikanten Einfluss auf y."
+            }
+          ]
+        },
+        {
+          "unit_id": "ch_v11_concept_5",
+          "unit_type": "concept",
+          "title": "lm() in R – Einfache Regression praktisch",
+          "estimated_minutes": 4,
+          "items": [
+            {
+              "type": "concept_card",
+              "title": "lm(y ~ x) – Regressionsobjekt",
+              "content_html": "<p>R berechnet KQ-Schätzer automatisch mit <code>lm()</code>:</p><div class='console-sim'><span class='prompt'>&gt;</span> model &lt;- lm(mpg ~ hp, data = mtcars)<br><span class='prompt'>&gt;</span> model<br><span class='output'>Coefficients:<br>(Intercept)          hp<br>   30.0989     -0.0682</span></div><table class='concept-table'><thead><tr><th>Attribut</th><th>Bedeutung</th></tr></thead><tbody><tr><td><code>$coefficients</code></td><td>Schätzer b₀ (Intercept) und b₁</td></tr><tr><td><code>$residuals</code></td><td>Residuen εᵢ = yᵢ − (b₀ + b₁·xᵢ)</td></tr><tr><td><code>$fitted.values</code></td><td>Gefittete Werte b₀ + b₁·xᵢ</td></tr></tbody></table><div class='console-sim'><span class='prompt'>&gt;</span> plot(mtcars$hp, mtcars$mpg)<br><span class='prompt'>&gt;</span> abline(model, col = \"red\")<br><span class='prompt'>&gt;</span> summary(model)   <span class='comment'># R², p-Werte, Std.fehler</span></div>",
+              "visual_type": "console",
+              "key_takeaway": "lm(y~x) berechnet KQ-Schätzer. abline(model) zeichnet Gerade. summary() zeigt R² und T-Tests."
+            }
+          ]
+        },
+        {
+          "unit_id": "ch_v11_practice_1",
+          "unit_type": "practice",
+          "title": "Voraussetzungen & Regression – Praxistraining",
+          "estimated_minutes": 18,
+          "items": [
+            {
+              "id": "ch_v11_q01",
+              "difficulty": 1,
+              "priority": "high",
+              "type": "multiple_choice",
+              "context": "Du willst eine ANOVA durchführen und prüfst vorher die Voraussetzungen.",
+              "question": "Welcher R-Befehl prüft, ob die Varianzen in den Gruppen gleich sind?",
+              "code_snippet": "library(car)\n# Wert und Gruppe sind definiert",
+              "options": [
+                "leveneTest(Wert, Gruppe)",
+                "var.test(Wert, Gruppe)",
+                "qqnorm(Wert)",
+                "bartlett.test(Gruppe)"
+              ],
+              "correct": "leveneTest(Wert, Gruppe)",
+              "explanation": "leveneTest() aus dem Paket 'car' testet Varianzgleichheit in mehreren Gruppen (H₀: alle Varianzen gleich). var.test() gilt nur für zwei Gruppen. qqnorm() prüft Normalverteilung, nicht Varianzgleichheit. bartlett.test() gibt es, aber ist empfindlicher gegenüber Nicht-Normalität.",
+              "hint": "Der Test heißt nach Howard Levene und kommt aus dem Paket 'car'.",
+              "visual": null,
+              "times_seen": 0,
+              "times_correct": 0,
+              "last_result": null
+            },
+            {
+              "id": "ch_v11_q02",
+              "difficulty": 1,
+              "priority": "high",
+              "type": "multiple_choice",
+              "context": "Du hast Messwerte in einem Vektor x und willst die Normalverteilungsannahme grafisch prüfen.",
+              "question": "Welche zwei Befehle verwendest du zusammen für einen Q-Q-Plot mit Referenzgerade?",
+              "code_snippet": null,
+              "options": [
+                "qqnorm(x) und qqline(x)",
+                "hist(x) und abline(h=0)",
+                "plot(x) und qqline(x)",
+                "qqplot(x) und qqnorm(x)"
+              ],
+              "correct": "qqnorm(x) und qqline(x)",
+              "explanation": "qqnorm(x) erstellt den Q-Q-Plot (empirische vs. theoretische Normalquantile). qqline(x) fügt die ideale Gerade hinzu. Wenn die Punkte nah an der Geraden liegen, ist Normalverteilung plausibel.",
+              "hint": "Zwei Befehle: einer zeichnet den Plot, einer die Linie.",
+              "visual": null,
+              "times_seen": 0,
+              "times_correct": 0,
+              "last_result": null
+            },
+            {
+              "id": "ch_v11_q03",
+              "difficulty": 2,
+              "priority": "high",
+              "type": "multiple_choice",
+              "context": "Im einfachen linearen Modell y = b₀ + b₁·x + ε wird ε als Fehlerterm bezeichnet.",
+              "question": "Was gilt für den Erwartungswert von ε im Modell?",
+              "code_snippet": null,
+              "options": [
+                "E(ε) = 0",
+                "E(ε) = b₀",
+                "E(ε) = b₁",
+                "E(ε) = ȳ"
+              ],
+              "correct": "E(ε) = 0",
+              "explanation": "Modellvoraussetzung: E(ε) = 0. Damit gilt E(y) = b₀ + b₁·x. Wäre E(ε) ≠ 0, wäre das ein systematischer Fehler, der in b₀ aufgenommen werden sollte.",
+              "hint": "Der Fehler ε variiert zufällig um null – sonst wäre er kein Fehler, sondern ein Effekt.",
+              "visual": null,
+              "times_seen": 0,
+              "times_correct": 0,
+              "last_result": null
+            },
+            {
+              "id": "ch_v11_q04",
+              "difficulty": 2,
+              "priority": "high",
+              "type": "code_output",
+              "context": "Gegeben: r(x,y) = 0.8, s(x) = 2, s(y) = 5, x̄ = 3, ȳ = 10.",
+              "question": "Welcher Wert ergibt sich für den KQ-Schätzer b₁?",
+              "code_snippet": "r  <- 0.8\nsx <- 2\nsy <- 5\nb1 <- r * sy / sx",
+              "options": [
+                "2.0",
+                "0.32",
+                "1.6",
+                "4.0"
+              ],
+              "correct": "2.0",
+              "explanation": "b₁ = r · s(y)/s(x) = 0.8 · 5/2 = 0.8 · 2.5 = 2.0. Die Steigung gibt an: pro Einheit x steigt der Erwartungswert von y um 2 Einheiten.",
+              "hint": "Formel: b₁ = r(x,y) · s(y) / s(x)",
+              "visual": null,
+              "times_seen": 0,
+              "times_correct": 0,
+              "last_result": null
+            },
+            {
+              "id": "ch_v11_q05",
+              "difficulty": 2,
+              "priority": "high",
+              "type": "code_output",
+              "context": "Fortsetzung: r=0.8, s(x)=2, s(y)=5, x̄=3, ȳ=10, b₁=2.0.",
+              "question": "Welcher Wert ergibt sich für b₀?",
+              "code_snippet": "b1 <- 2.0\nx_mean <- 3\ny_mean <- 10\nb0 <- y_mean - b1 * x_mean",
+              "options": [
+                "4",
+                "16",
+                "−6",
+                "10"
+              ],
+              "correct": "4",
+              "explanation": "b₀ = ȳ − b₁·x̄ = 10 − 2.0·3 = 10 − 6 = 4. Das Modell lautet also: E(y) = 4 + 2·x. Probe: bei x=x̄=3 ergibt sich E(y) = 4+6 = 10 = ȳ. ✓",
+              "hint": "Formel: b₀ = ȳ − b₁ · x̄. Der Mittelpunkt (x̄, ȳ) liegt immer auf der Geraden.",
+              "visual": null,
+              "times_seen": 0,
+              "times_correct": 0,
+              "last_result": null
+            },
+            {
+              "id": "ch_v11_q06",
+              "difficulty": 2,
+              "priority": "high",
+              "type": "multiple_choice",
+              "context": "Ein Datenpunkt hat y₅ = 12 und den gefitteten Wert ŷ₅ = 9.",
+              "question": "Wie groß ist der Residuum ε₅?",
+              "code_snippet": null,
+              "options": [
+                "3",
+                "−3",
+                "21",
+                "0.75"
+              ],
+              "correct": "3",
+              "explanation": "Residuum: εᵢ = yᵢ − ŷᵢ = yᵢ − (b₀ + b₁·xᵢ) = 12 − 9 = 3. Positive Residuen: Modell unterschätzt y. Negative: überschätzt.",
+              "hint": "Residuum = beobachtet − geschätzt.",
+              "visual": null,
+              "times_seen": 0,
+              "times_correct": 0,
+              "last_result": null
+            },
+            {
+              "id": "ch_v11_q07",
+              "difficulty": 2,
+              "priority": "high",
+              "type": "multiple_choice",
+              "context": "summary(lm(y ~ x)) zeigt: Multiple R-squared = 0.81",
+              "question": "Was bedeutet R² = 0.81?",
+              "code_snippet": null,
+              "options": [
+                "Das Modell erklärt 81% der Varianz von y",
+                "Der Korrelationskoeffizient r beträgt 0.81",
+                "81% der Residuen sind kleiner als 1",
+                "b₁ ist signifikant mit p < 0.81"
+              ],
+              "correct": "Das Modell erklärt 81% der Varianz von y",
+              "explanation": "R² = 0.81: Das lineare Modell erklärt 81% der Gesamtvarianz von y – der Rest (19%) ist durch ε nicht erklärte Streuung. Da es ein einfaches Modell ist: r = √0.81 = 0.9 (Betrag des Korrelationskoeffizienten).",
+              "hint": "R² = Anteil erklärter Varianz. Im einfachen Modell gilt R² = r².",
+              "visual": null,
+              "times_seen": 0,
+              "times_correct": 0,
+              "last_result": null
+            },
+            {
+              "id": "ch_v11_q08",
+              "difficulty": 3,
+              "priority": "high",
+              "type": "multiple_choice",
+              "context": "summary(lm(y ~ x)) zeigt für den Koeffizienten x: Pr(>|t|) = 0.002",
+              "question": "Was schließt du aus p = 0.002 für den t-Test von b₁ (α = 0.05)?",
+              "code_snippet": null,
+              "options": [
+                "H₀: b₁=0 ablehnen – x hat signifikanten Einfluss auf y",
+                "H₀: b₁=0 beibehalten – x hat keinen Einfluss",
+                "Das Modell hat R² = 0.002",
+                "Der Korrelationskoeffizient beträgt 0.002"
+              ],
+              "correct": "H₀: b₁=0 ablehnen – x hat signifikanten Einfluss auf y",
+              "explanation": "p = 0.002 < α = 0.05 → H₀ (b₁=0) ablehnen. Die Steigung ist signifikant von null verschieden – x leistet einen statistisch relevanten Beitrag zur Erklärung von y. Das Nullmodell (nur Intercept) wäre schlechter.",
+              "hint": "p < α → H₀ ablehnen. H₀ bei b₁: Steigung ist null (kein Effekt von x).",
+              "visual": null,
+              "times_seen": 0,
+              "times_correct": 0,
+              "last_result": null
+            },
+            {
+              "id": "ch_v11_q09",
+              "difficulty": 2,
+              "priority": "medium",
+              "type": "multiple_choice",
+              "context": "Du hast ein lm()-Objekt model und willst die Regressionsgerade in den Scatterplot einzeichnen.",
+              "question": "Welcher Befehl zeichnet die Regressionsgerade ein?",
+              "code_snippet": "plot(x, y)\n# Regressionsgerade hinzufügen:",
+              "options": [
+                "abline(model)",
+                "lines(model)",
+                "curve(model)",
+                "geom_smooth(model)"
+              ],
+              "correct": "abline(model)",
+              "explanation": "abline(model) erkennt ein lm()-Objekt und zeichnet die Gerade b₀ + b₁·x automatisch. lines() wäre für Koordinaten-Vektoren. curve() für Funktionen. geom_smooth() ist ggplot2.",
+              "hint": "abline() kann direkt ein lm-Objekt als Argument nehmen.",
+              "visual": null,
+              "times_seen": 0,
+              "times_correct": 0,
+              "last_result": null
+            },
+            {
+              "id": "ch_v11_q10",
+              "difficulty": 3,
+              "priority": "high",
+              "type": "true_false",
+              "context": "Einfache lineare Regression mit einer unabhängigen Variable.",
+              "question": "Im einfachen linearen Regressionsmodell gilt: R² ist gleich dem Quadrat des Pearson-Korrelationskoeffizienten r(x,y).",
+              "code_snippet": null,
+              "options": [
+                "Wahr",
+                "Falsch"
+              ],
+              "correct": "Wahr",
+              "explanation": "WAHR — Im einfachen linearen Modell (eine erklärende Variable) gilt exakt R² = r(x,y)². Beispiel: r = 0.9 → R² = 0.81. Bei mehreren erklärenden Variablen gilt diese einfache Beziehung nicht mehr (dort ist R² das Multiple R-squared).",
+              "hint": "Einfache Regression: eine x-Variable. Gilt die Formel R²=r² hier?",
+              "visual": null,
+              "times_seen": 0,
+              "times_correct": 0,
+              "last_result": null
+            },
+            {
+              "id": "ch_v11_q11",
+              "difficulty": 3,
+              "priority": "high",
+              "type": "interpret_conclude",
+              "context": "Übungsaufgabe 29 (Vorlesung V11): set.seed(2705), n=25, x ~ N(3,2²), ε ~ N(0,2²), y = 2 − 0.5·x + ε",
+              "question": "Du berechnest per Hand: r(x,y) = −0.72, s(x) = 1.9, s(y) = 1.4. Welchen b₁-Schätzer erhältst du?",
+              "code_snippet": "r  <- -0.72\nsx <- 1.9\nsy <- 1.4\nb1 <- r * sy / sx\nb1",
+              "options": [
+                "b₁ ≈ −0.53 (nahe dem wahren Wert −0.5)",
+                "b₁ ≈ 0.53 (falsches Vorzeichen)",
+                "b₁ ≈ −0.98 (r·sy/sx vertauscht)",
+                "b₁ ≈ −1.44 (sx und sy vertauscht)"
+              ],
+              "correct": "b₁ ≈ −0.53 (nahe dem wahren Wert −0.5)",
+              "explanation": "b₁ = r · s(y)/s(x) = −0.72 · 1.4/1.9 ≈ −0.72 · 0.737 ≈ −0.53. Das wahre Modell hat b₁ = −0.5 – der Schätzer liegt nahe dran, aber nicht exakt (Stichprobenvariabilität). Vorzeichen negativ: korrekt, da r negativ.",
+              "hint": "Formel: b₁ = r · s(y)/s(x). Vorzeichen von r bleibt erhalten.",
+              "visual": null,
+              "times_seen": 0,
+              "times_correct": 0,
+              "last_result": null
+            },
+            {
+              "id": "ch_v11_q12",
+              "difficulty": 3,
+              "priority": "high",
+              "type": "interpret_conclude",
+              "context": "Aufgabe 30 (V11): Staedte.csv – x = pro.qkm (Einwohner/km²), y = log10(Einw). Regression: log10(Einw) ~ pro.qkm.",
+              "question": "lm(log10(Einw) ~ pro.qkm): b0=3.98, b1=0.00035. Dresden: pro.qkm=1724. Welcher Wert ergibt sich für die Schätzung log10(Einw)?",
+              "code_snippet": "b0 <- 3.98\nb1 <- 0.00035\npro_qkm_dresden <- 1724\n# Schätzung:\ny_hat <- b0 + b1 * pro_qkm_dresden\ny_hat  # log10(Einw)\n10^y_hat  # Einwohnerzahl",
+              "options": [
+                "log10(Einw) ≈ 4.58 → Einw ≈ 38 000",
+                "log10(Einw) ≈ 3.98 → Einw ≈ 9 500",
+                "log10(Einw) ≈ 0.60 → Einw ≈ 4",
+                "log10(Einw) ≈ 5.21 → Einw ≈ 162 000"
+              ],
+              "correct": "log10(Einw) ≈ 4.58 → Einw ≈ 38 000",
+              "explanation": "ŷ = b0 + b1 · x = 3.98 + 0.00035 · 1724 = 3.98 + 0.603 = 4.583. Also Einw ≈ 10^4.583 ≈ 38 300. Beachte: die Regression läuft auf der log-Skala. Rücktransformation mit 10^ŷ gibt die geschätzte Einwohnerzahl. Die wahre Zahl Dresden ≈ 556 000 würde b0+b1*x=(3.98+0.6)=4.58 → 38 000 stark unterschätzen – zeigt Grenzen des einfachen linearen Modells.",
+              "hint": "Einsetzen: ŷ = b0 + b1·x. Rücktransformation: 10^ŷ gibt die Einwohnerzahl.",
+              "visual": null,
+              "times_seen": 0,
+              "times_correct": 0,
+              "last_result": null
+            },
+            {
+              "id": "ch_v11_q13",
+              "difficulty": 3,
+              "priority": "high",
+              "type": "multiple_choice",
+              "context": "Aufgabe 30 (V11): log10-Transformation von Einwohnerzahlen vor der Regression.",
+              "question": "Warum transformiert man die Einwohnerzahl mit log10() vor der Regression?",
+              "code_snippet": "X$LED <- log10(X$Einw)  # log10 der Einwohnerzahl\nplot(X$pro.qkm, X$LED)  # viel linearer als ohne log",
+              "options": [
+                "Rechts-schiefe Verteilung wird symmetrischer – besser für lineare Regression und Hypothesentests",
+                "log10() macht alle Werte zwischen 0 und 1",
+                "Logarithmieren erhöht R² automatisch",
+                "Nur um die Grafik schöner zu machen"
+              ],
+              "correct": "Rechts-schiefe Verteilung wird symmetrischer – besser für lineare Regression und Hypothesentests",
+              "explanation": "Einwohnerzahlen variieren über viele Größenordnungen (Dorf vs. Großstadt) → stark rechts-schief. log10() komprimiert große Werte und streckt kleine → symmetrischere Verteilung. Das macht: (1) den linearen Zusammenhang sichtbarer, (2) Normalverteilungsvoraussetzung plausibler, (3) Residuen homoskedastischer.",
+              "hint": "Schief → nicht normalverteilt → log-Transformation für Symmetrie.",
+              "visual": null,
+              "times_seen": 0,
+              "times_correct": 0,
+              "last_result": null
+            },
+            {
+              "id": "ch_v11_q14",
+              "difficulty": 3,
+              "priority": "high",
+              "type": "mini_challenge",
+              "context": "Aufgabe 29 (V11): Regression von Grund auf aufbauen.",
+              "question": "Baue ein vollständiges Regressionsmodell: set.seed(2705), n=25, y = 2 − 0.5·x + ε. Berechne manuell b₁ und b₀, dann überprüfe mit lm().",
+              "code_snippet": "set.seed(2705)\nn <- 25\nx <- rnorm(n, mean=3, sd=2)\neps <- rnorm(n, mean=0, sd=2)\ny <- 2 - 0.5 * x + eps\n\n# Manuell (KQ-Schätzer):\nr_xy <- cor(x, y)\nb1_manuell <- r_xy * sd(y) / sd(x)\nb0_manuell <- mean(y) - b1_manuell * mean(x)\ncat('b1:', round(b1_manuell, 3), 'b0:', round(b0_manuell, 3), '\\n')\n\n# Mit lm():\nmodel <- lm(y ~ x)\ncat('lm b1:', round(coef(model)[2], 3), 'b0:', round(coef(model)[1], 3), '\\n')\n\n# R²:\ncat('R²:', round(summary(model)$r.squared, 3), '\\n')\n# Erwartet: b1 ≈ -0.5, b0 ≈ 2, R² ≈ r²",
+              "options": [],
+              "correct": "b1_manuell, b0_manuell, summary(model)$r.squared",
+              "correct_pattern": "lm",
+              "explanation": "set.seed(2705) sichert Reproduzierbarkeit. x ~ N(3,4), ε ~ N(0,4), y = 2 - 0.5x + ε. KQ manuell: b1 = r·s(y)/s(x) – sollte ≈ -0.5. b0 = ȳ - b1·x̄ – sollte ≈ 2. lm() gibt identische Werte. R² = r² ≈ 0.25-0.40 (variiert je Stichprobe). S²_null = var(y)·(n-1) = Varianz ohne Modell. Summary zeigt T-Tests: b1 sollte signifikant sein (p < 0.05).",
+              "hint": "Manuell und lm() müssen exakt übereinstimmen. R² = r(x,y)².",
+              "visual": null,
+              "times_seen": 0,
+              "times_correct": 0,
+              "last_result": null
+            }
+          ]
+        },
+        {
+          "unit_id": "ch_v11_summary",
+          "unit_type": "summary",
+          "title": "Kapitel V11 abgeschlossen",
           "estimated_minutes": 1,
           "items": []
         }
