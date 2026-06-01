@@ -8,6 +8,7 @@ const Session = (() => {
   let _idx         = 0;
   let _sessionCorrect = 0;
   let _sessionTotal   = 0;
+  let _unitCache   = {}; // unit_id -> items (for local review)
 
   // ── Open chapter ───────────────────────────────────────────────
 
@@ -15,6 +16,7 @@ const Session = (() => {
     _chapterId = chapterId;
     _sessionCorrect = 0;
     _sessionTotal   = 0;
+    _unitCache = {};
 
     const r = await fetch(`/api/chapter/${chapterId}`);
     if (!r.ok) { alert('Kapitel nicht gefunden oder gesperrt.'); return; }
@@ -39,7 +41,8 @@ const Session = (() => {
     const nav = document.getElementById('session-units-nav');
     if (!nav) return;
     nav.innerHTML = _unitList.map(u => {
-      const done = u.status === 'completed' ? 'done' : '';
+      const status = Store.getUnitStatus(u.unit_id, _chapterId);
+      const done = status === 'completed' ? 'done' : '';
       const type = u.unit_type === 'concept_intro' || u.unit_type === 'concept' ? 'concept' : 'practice';
       return `<button class="unit-nav-btn ${done}" data-uid="${u.unit_id}" data-type="${type}">
         <span class="unit-nav-dot"></span>
@@ -68,8 +71,9 @@ const Session = (() => {
     const data = await r.json();
     _activeUnit = data;
     _items = data.items || [];
-    _idx   = data.current_item || 0;
+    _idx   = Store.getUnitProgress(unitId);
     if (_idx >= _items.length) _idx = 0;
+    if (_items.length) _unitCache[unitId] = _items;
 
     document.getElementById('session-unit-label').textContent = data.title || '';
     _setActiveNavBtn(unitId);
@@ -119,16 +123,12 @@ const Session = (() => {
     if (_activeUnit) {
       const qid = _items[_idx]?.id;
       if (qid) {
-        await fetch('/api/answer', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            question_id: qid,
-            correct,
-            hint_used: hintUsed,
-            unit_id: _activeUnit.unit_id,
-            item_index: _idx,
-          })
+        Store.recordAnswer({
+          question_id: qid,
+          correct,
+          hint_used: hintUsed,
+          unit_id: _activeUnit.unit_id,
+          item_index: _idx,
         });
       }
     }
@@ -163,14 +163,7 @@ const Session = (() => {
 
   async function _completeUnit() {
     if (!_activeUnit) return;
-    await fetch('/api/unit/complete', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        unit_id: _activeUnit.unit_id,
-        chapter_id: _chapterId,
-      })
-    });
+    Store.completeUnit({ unit_id: _activeUnit.unit_id, chapter_id: _chapterId });
 
     // Mark nav btn done
     const navBtn = document.querySelector(`.unit-nav-btn[data-uid="${_activeUnit.unit_id}"]`);
@@ -193,11 +186,7 @@ const Session = (() => {
     const accuracy = _sessionTotal
       ? Math.round(_sessionCorrect / _sessionTotal * 100) : 100;
 
-    await fetch('/api/chapter/complete', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ chapter_id: _chapterId, accuracy })
-    });
+    Store.completeChapter({ chapter_id: _chapterId, accuracy });
 
     document.getElementById('complete-title').textContent =
       (_chapterData?.chapter?.title || 'Kapitel') + ' abgeschlossen!';
@@ -222,11 +211,19 @@ const Session = (() => {
   }
 
   async function _startReview() {
-    const r = await fetch(`/api/review/${_chapterId}`);
-    const data = await r.json();
-    if (!data.items || !data.items.length) { alert('Keine Fehler!'); return; }
+    const wrongIds = new Set(Store.getWrongIds(_chapterId));
+    if (!wrongIds.size) { alert('Keine Fehler!'); return; }
 
-    _items = data.items;
+    const items = [];
+    for (const cachedItems of Object.values(_unitCache)) {
+      for (const item of cachedItems) {
+        if (item.id && wrongIds.has(item.id)) items.push(item);
+      }
+    }
+
+    if (!items.length) { alert('Keine Fehler!'); return; }
+
+    _items = items;
     _idx   = 0;
     _sessionCorrect = 0;
     _sessionTotal   = 0;

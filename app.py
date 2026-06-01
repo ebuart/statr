@@ -59,6 +59,17 @@ def index():
     return render_template("index.html")
 
 
+@app.route("/manifest.json")
+def manifest():
+    return send_from_directory(STATIC_DIR, "manifest.json", mimetype="application/manifest+json")
+
+
+@app.route("/sw.js")
+def service_worker():
+    return send_from_directory(STATIC_DIR, "sw.js", mimetype="application/javascript",
+                               max_age=0)
+
+
 @app.route("/api/path")
 def api_path():
     content = load_content()
@@ -75,6 +86,7 @@ def api_path():
             "title": ch["title"],
             "description": ch["description"],
             "priority": ch.get("priority", "medium"),
+            "unit_count": units_total,
             "unlocked": cp.get("unlocked", False),
             "completed": cp.get("completed", False),
             "coming_soon": ch.get("coming_soon", False),

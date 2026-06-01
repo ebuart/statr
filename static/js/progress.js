@@ -3,12 +3,7 @@ const Progress = (() => {
   let _data = null;
 
   async function load() {
-    try {
-      const r = await fetch('/api/progress');
-      _data = await r.json();
-    } catch (e) {
-      _data = { total_questions: 0, answered: 0, correct: 0, accuracy: 0, chapters_completed: 0, chapters_total: 15 };
-    }
+    _data = Store.getStats();
     return _data;
   }
 

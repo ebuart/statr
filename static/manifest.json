@@ -1,0 +1,24 @@
+{
+  "name": "StatR – R Lernpfad",
+  "short_name": "StatR",
+  "description": "Interaktiver R-Lernpfad für Computerstatistik",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F3F2EE",
+  "theme_color": "#5B50E8",
+  "icons": [
+    {
+      "src": "/static/img/icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/static/img/icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}

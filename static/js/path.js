@@ -4,7 +4,9 @@ const Path = (() => {
   async function load() {
     const r = await fetch('/api/path');
     const data = await r.json();
-    _render(data.chapters, data.current_chapter);
+    const chapters = Store.enrichPath(data.chapters || []);
+    Store.setMeta(chapters.map(c => c.chapter_id), chapters.filter(c => !c.coming_soon).length);
+    _render(chapters, Store.getCurrentChapter());
     Progress.refresh();
   }
 
