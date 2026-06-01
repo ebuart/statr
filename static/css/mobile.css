@@ -322,7 +322,7 @@
 
 /* ── Touch: remove hover transforms (avoid sticky hover on touch) */
 @media (hover: none) {
-  .chapter-card:hover:not(.locked):not(.coming-soon) {
+  .chapter-card:hover:not(.coming-soon) {
     box-shadow: var(--shadow-xs);
     border-color: var(--border-md);
     transform: none;

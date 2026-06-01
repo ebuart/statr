@@ -18,7 +18,6 @@ const Path = (() => {
         const cid = card.dataset.cid;
         const ch  = chapters.find(c => c.chapter_id === cid);
         if (!ch || ch.coming_soon) return;
-        if (!ch.unlocked && !ch.completed) return;
         Session.open(cid);
       });
     });
@@ -45,7 +44,6 @@ const Path = (() => {
     } else if (!ch.unlocked) {
       stateClass = 'locked';
       badge = '<span class="ch-badge ch-badge-lock">🔒</span>';
-      locked = true;
     } else if (ch.chapter_id === currentId) {
       stateClass = 'active';
     }
@@ -57,7 +55,7 @@ const Path = (() => {
 
     return `
       <div class="chapter-card ${stateClass}" data-cid="${ch.chapter_id}"
-           role="button" tabindex="${locked ? -1 : 0}"
+           role="button" tabindex="${ch.coming_soon ? -1 : 0}"
            aria-label="${_esc(ch.title)}">
         <div class="ch-header">
           <div class="ch-num-wrap">

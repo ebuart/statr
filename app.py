@@ -92,8 +92,8 @@ def api_chapter(chapter_id):
     if not chapter:
         return jsonify({"error": "Not found"}), 404
     cp = progress["chapters"].get(chapter_id, {})
-    if not cp.get("unlocked") and not chapter.get("coming_soon"):
-        return jsonify({"error": "Locked"}), 403
+    if chapter.get("coming_soon"):
+        return jsonify({"error": "Coming soon"}), 403
     units = []
     for u in chapter["units"]:
         uid = u["unit_id"]

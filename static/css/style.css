@@ -165,16 +165,16 @@ button { font-family: inherit; }
   transition: box-shadow 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
   box-shadow: var(--shadow-xs);
 }
-.chapter-card:hover:not(.locked):not(.coming-soon) {
+.chapter-card:hover:not(.coming-soon) {
   box-shadow: var(--shadow-md);
   border-color: var(--accent);
   transform: translateY(-2px);
 }
-.chapter-card:active:not(.locked):not(.coming-soon) {
+.chapter-card:active:not(.coming-soon) {
   transform: translateY(0);
   box-shadow: var(--shadow);
 }
-.chapter-card.locked    { cursor: default; opacity: 0.55; }
+.chapter-card.locked    { cursor: pointer; opacity: 0.6; filter: grayscale(0.3); }
 .chapter-card.coming-soon { cursor: default; opacity: 0.55; border-style: dashed; }
 .chapter-card.completed { border-color: var(--success); background: linear-gradient(135deg, var(--surface), rgba(16,185,129,0.035)); }
 .chapter-card.active    { border-color: var(--accent); box-shadow: var(--shadow), 0 0 0 3px var(--accent-light); }
