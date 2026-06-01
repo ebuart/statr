@@ -138,6 +138,7 @@ const Session = (() => {
       if (correct && !hintUsed) _sessionCorrect++;
     }
 
+    _hideHint();
     _injectNextBtn(correct);
   }
 
