@@ -6,7 +6,7 @@ BASE = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(BASE, "data")
 STATIC_DIR = os.path.join(BASE, "static")
 CONTENT_FILE = os.path.join(DATA_DIR, "content.json")
-PROGRESS_FILE = os.path.join(DATA_DIR, "progress.json")
+PROGRESS_FILE = os.path.join("/tmp" if os.environ.get("VERCEL") else DATA_DIR, "progress.json")
 
 app = Flask(__name__, template_folder="templates", static_folder="static")
 
