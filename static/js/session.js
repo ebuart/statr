@@ -87,7 +87,7 @@ const Session = (() => {
     const btn = document.getElementById('sidebar-next-btn');
     if (!btn) return;
     btn.textContent = label;
-    btn.style.display = '';
+    btn.style.display = 'flex';
     btn.onclick = _advance;
   }
 
