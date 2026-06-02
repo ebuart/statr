@@ -320,6 +320,41 @@
   .session-sidebar { padding: 6px 12px; }
 }
 
+/* ── iPhone safe-area (Notch + Home Indicator) ─────────────────── */
+@supports (padding: env(safe-area-inset-bottom)) {
+
+  /* Path view: header clears status bar */
+  .app-header {
+    padding-left:  max(16px, env(safe-area-inset-left));
+    padding-right: max(16px, env(safe-area-inset-right));
+  }
+
+  /* Session header */
+  .session-header {
+    padding-left:  max(10px, env(safe-area-inset-left));
+    padding-right: max(10px, env(safe-area-inset-right));
+  }
+
+  /* Bottom sticky bar: sit above home indicator */
+  @media (max-width: 768px) {
+    .session-sidebar {
+      padding-bottom: max(8px, env(safe-area-inset-bottom));
+    }
+    /* push content clear of the taller bar */
+    .session-content {
+      padding-bottom: calc(80px + env(safe-area-inset-bottom));
+    }
+    /* hint panel: float above home indicator too */
+    .hint-panel {
+      bottom: calc(56px + env(safe-area-inset-bottom));
+    }
+    /* path-main: account for stats bar + safe area */
+    .path-main {
+      padding-bottom: max(16px, env(safe-area-inset-bottom));
+    }
+  }
+}
+
 /* ── Touch: remove hover transforms (avoid sticky hover on touch) */
 @media (hover: none) {
   .chapter-card:hover:not(.coming-soon) {
