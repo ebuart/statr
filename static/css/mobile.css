@@ -12,7 +12,6 @@
   /* ── Path View ──────────────────────────────────────────────── */
   .path-layout {
     flex-direction: column;
-    overflow: visible;
   }
 
   .sidebar {
@@ -58,13 +57,10 @@
 
   .path-main {
     flex: 1;
+    min-height: 0;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     padding: 16px 12px;
-    height: calc(100vh - 64px - 55px); /* viewport minus header minus stat bar */
-  }
-
-  @supports (height: 100dvh) {
-    .path-main { height: calc(100dvh - 64px - 55px); }
   }
 
   .chapter-path { gap: 8px; max-width: 100%; }
@@ -129,11 +125,12 @@
 
   /* Main content area */
   .session-content {
-    padding: 14px 12px 80px; /* bottom padding for the sticky sidebar */
-    align-items: stretch;
-    overflow-y: auto;
     flex: 1;
     min-height: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 14px 12px 80px;
+    align-items: stretch;
   }
 
   /* Sticky bottom sidebar on mobile */
