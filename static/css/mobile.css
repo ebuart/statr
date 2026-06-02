@@ -176,6 +176,17 @@
     min-height: 36px;
   }
 
+  .sidebar-next-btn {
+    width: auto;
+    flex-shrink: 0;
+    height: 40px;
+    padding: 0 20px;
+    font-size: 14px;
+    font-weight: 700;
+    margin-top: 0;
+    margin-left: 8px;
+  }
+
   /* Hint panel pops up above the sticky bar */
   .hint-panel {
     position: fixed;
@@ -197,8 +208,7 @@
   .concept-title { font-size: 17px; }
   .concept-body  { font-size: 14px; }
   .concept-takeaway { padding: 12px 14px; }
-  .concept-nav { justify-content: stretch; margin-bottom: 16px; }
-  .concept-nav .btn-primary { width: 100%; justify-content: center; height: 54px; font-size: 15px; }
+  .concept-nav { display: none; }
 
   .question-card {
     padding: 20px 16px;
@@ -217,7 +227,6 @@
 
   /* Next/primary buttons */
   .btn-primary, .btn-secondary { height: 52px; font-size: 15px; }
-  .btn-next-q { width: 100%; justify-content: center; margin-top: 16px; height: 54px; font-size: 15px; }
 
   /* Code input */
   .code-input { font-size: 13px; min-height: 120px; }

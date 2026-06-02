@@ -83,6 +83,19 @@ const Session = (() => {
 
   // ── Render current item ────────────────────────────────────────
 
+  function _showSidebarNext(label) {
+    const btn = document.getElementById('sidebar-next-btn');
+    if (!btn) return;
+    btn.textContent = label;
+    btn.style.display = '';
+    btn.onclick = _advance;
+  }
+
+  function _hideSidebarNext() {
+    const btn = document.getElementById('sidebar-next-btn');
+    if (btn) { btn.style.display = 'none'; btn.onclick = null; }
+  }
+
   function _renderItem() {
     const content = document.getElementById('session-content');
     if (!content || !_items.length) return;
@@ -92,19 +105,16 @@ const Session = (() => {
       return;
     }
 
+    _hideSidebarNext();
+
     const item = _items[_idx];
     _renderProgressBar();
     _updateSidebarMeta(item);
 
     if (item.type === 'concept_card') {
-      content.innerHTML = Concepts.render(item) + `
-        <div class="concept-nav">
-          <button class="btn-primary" id="btn-concept-next">
-            ${_idx + 1 < _items.length ? 'Weiter →' : 'Zur Übung →'}
-          </button>
-        </div>`;
-      document.getElementById('btn-concept-next')?.addEventListener('click', _advance);
+      content.innerHTML = Concepts.render(item);
       _hideHint();
+      _showSidebarNext(_idx + 1 < _items.length ? 'Weiter →' : 'Zur Übung →');
       setTimeout(() => hljs && hljs.highlightAll && hljs.highlightAll(), 50);
     } else {
       content.innerHTML = Questions.render(item, _onAnswer);
@@ -143,15 +153,7 @@ const Session = (() => {
   }
 
   function _injectNextBtn(correct) {
-    const content = document.getElementById('session-content');
-    if (!content) return;
-    const existing = content.querySelector('.btn-next-q');
-    if (existing) return;
-    const btn = document.createElement('button');
-    btn.className = 'btn-primary btn-next-q';
-    btn.textContent = _idx + 1 < _items.length ? 'Weiter →' : 'Abschließen ✓';
-    btn.addEventListener('click', _advance);
-    content.appendChild(btn);
+    _showSidebarNext(_idx + 1 < _items.length ? 'Weiter →' : 'Abschließen ✓');
   }
 
   function _advance() {
