@@ -129,7 +129,7 @@
     min-height: 0;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    padding: 14px 12px 80px;
+    padding: 14px 12px 100px;
     align-items: stretch;
   }
 
@@ -197,8 +197,8 @@
   .concept-title { font-size: 17px; }
   .concept-body  { font-size: 14px; }
   .concept-takeaway { padding: 12px 14px; }
-  .concept-nav { justify-content: stretch; }
-  .concept-nav .btn-primary { width: 100%; justify-content: center; }
+  .concept-nav { justify-content: stretch; margin-bottom: 16px; }
+  .concept-nav .btn-primary { width: 100%; justify-content: center; height: 54px; font-size: 15px; }
 
   .question-card {
     padding: 20px 16px;
@@ -216,8 +216,8 @@
   .tf-btn { height: 52px; font-size: 15px; }
 
   /* Next/primary buttons */
-  .btn-primary, .btn-secondary { height: 48px; font-size: 14px; }
-  .btn-next-q { width: 100%; justify-content: center; margin-top: 12px; }
+  .btn-primary, .btn-secondary { height: 52px; font-size: 15px; }
+  .btn-next-q { width: 100%; justify-content: center; margin-top: 16px; height: 54px; font-size: 15px; }
 
   /* Code input */
   .code-input { font-size: 13px; min-height: 120px; }
@@ -339,7 +339,7 @@
     }
     /* push content clear of the taller bar */
     .session-content {
-      padding-bottom: calc(80px + env(safe-area-inset-bottom));
+      padding-bottom: calc(100px + env(safe-area-inset-bottom));
     }
     /* hint panel: float above home indicator too */
     .hint-panel {
