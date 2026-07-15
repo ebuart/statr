@@ -278,6 +278,10 @@ const Session = (() => {
         concept_matching: 'Zuordnung',
         mini_challenge: 'Mini-Challenge',
         interpret_conclude: 'Interpretieren',
+        numeric: 'Berechnung',
+        dropdown_cloze: 'Lückentext',
+        block_order: 'Blöcke ordnen',
+        self_check: 'Freitext',
         concept_card: 'Konzept',
       };
       typeEl.textContent = labels[item.type] || '';

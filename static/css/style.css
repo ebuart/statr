@@ -899,3 +899,38 @@ code { font-family: 'JetBrains Mono', monospace; font-size: 13px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border-md); border-radius: 99px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+/* ── Klausursimulation question types ───────────────────────────── */
+.num-grid { display:flex; flex-direction:column; gap:10px; margin:14px 0; }
+.num-row { display:flex; align-items:center; gap:12px; }
+.num-label { flex:1; font-size:14px; color:var(--text,#1A1A2E); }
+.num-input { width:190px; font-family:"JetBrains Mono",monospace; font-size:15px;
+  padding:9px 12px; border:2px solid #D8D6E8; border-radius:8px; background:#fff; }
+.num-input:focus { outline:none; border-color:#5B50E8; }
+.num-input.num-ok  { border-color:#2E9E6B; background:#EAFBF2; color:#1A1A2E; }
+.num-input.num-bad { border-color:#E8506A; background:#FFECF0; color:#1A1A2E; }
+
+.cloze-body { font-size:15px; line-height:2.2; margin:12px 0; }
+.cloze-sel { font-family:inherit; font-size:14px; padding:5px 8px; margin:0 2px;
+  border:2px solid #8B84F0; border-radius:7px; background:#F3F1FF; color:#1A1A2E; max-width:260px; }
+.cloze-sel:focus { outline:none; border-color:#5B50E8; }
+.cloze-sel.cloze-ok  { border-color:#2E9E6B; background:#EAFBF2; }
+.cloze-sel.cloze-bad { border-color:#E8506A; background:#FFECF0; }
+
+.blk-hint { font-size:13px; color:#6B6B8A; margin:8px 0; }
+.blk-answer { min-height:44px; border:2px dashed #B8B4E0; border-radius:10px;
+  padding:8px; margin-bottom:12px; display:flex; flex-wrap:wrap; gap:6px; align-items:center; background:#FAFAFF; }
+.blk-answer.blk-ok  { border-color:#2E9E6B; background:#EAFBF2; border-style:solid; }
+.blk-answer.blk-bad { border-color:#E8506A; background:#FFECF0; border-style:solid; }
+.blk-placeholder { color:#B0AECF; font-size:14px; padding-left:6px; }
+.blk-pool { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px; }
+.blk-chip { font-family:"JetBrains Mono",monospace; font-size:14px; padding:8px 12px;
+  border:2px solid #8B84F0; border-radius:8px; background:#F3F1FF; color:#1A1A2E; cursor:pointer; }
+.blk-chip:hover:not(:disabled) { background:#E4E0FF; }
+.blk-chip.in-ans { background:#5B50E8; color:#fff; border-color:#5B50E8; }
+.blk-chip:disabled { cursor:default; opacity:.9; }
+
+.sc-model { background:#F3F1FF; border-left:4px solid #5B50E8; border-radius:0 8px 8px 0;
+  padding:12px 14px; margin:12px 0; font-size:14px; line-height:1.6; }
+.sc-ask { font-weight:600; margin:10px 0 6px; }
+.sc-grade { display:flex; gap:10px; }

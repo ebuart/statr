@@ -1,6 +1,8 @@
 import json
 import os
+import random
 from flask import Flask, jsonify, request, send_from_directory, render_template
+from klausur_bank import build_chapter
 
 BASE = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(BASE, "data")
@@ -13,7 +15,11 @@ app = Flask(__name__, template_folder="templates", static_folder="static")
 
 def load_content():
     with open(CONTENT_FILE, encoding="utf-8") as f:
-        return json.load(f)
+        content = json.load(f)
+    # Klausursimulation-Kapitel frisch injizieren (Antworten berechnet, nicht in content.json)
+    if not any(c.get("chapter_id") == "ch_klausursim" for c in content["chapters"]):
+        content["chapters"].append(build_chapter())
+    return content
 
 
 def load_progress():
@@ -87,7 +93,7 @@ def api_path():
             "description": ch["description"],
             "priority": ch.get("priority", "medium"),
             "unit_count": units_total,
-            "unlocked": cp.get("unlocked", False),
+            "unlocked": cp.get("unlocked", ch.get("unlocked", False)),
             "completed": cp.get("completed", False),
             "coming_soon": ch.get("coming_soon", False),
             "accuracy": cp.get("accuracy"),
@@ -127,7 +133,11 @@ def api_unit(unit_id):
     for ch in content["chapters"]:
         for u in ch["units"]:
             if u["unit_id"] == unit_id:
-                items = _enrich_items(u["items"], progress)
+                src_items = u["items"]
+                pick = u.get("pick")
+                if pick and len(src_items) > pick:
+                    src_items = random.sample(src_items, pick)
+                items = _enrich_items(src_items, progress)
                 return jsonify({
                     "unit_id": unit_id,
                     "unit_type": u["unit_type"],
@@ -309,6 +319,17 @@ def api_exam_evaluate():
 
 
 if __name__ == "__main__":
+    import socket
     from r_simulator import generate_all
     generate_all()
-    app.run(debug=True, port=5000)
+
+    def _free_port(preferred=5000):
+        for p in [preferred] + list(range(5001, 5050)):
+            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+                if s.connect_ex(("127.0.0.1", p)) != 0:
+                    return p
+        return preferred
+
+    port = int(os.environ.get("PORT") or _free_port(5000))
+    print(f"StatR läuft auf http://localhost:{port}")
+    app.run(debug=True, port=port)
