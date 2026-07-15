@@ -1,4 +1,4 @@
-const CACHE = 'statr-v6';
+const CACHE = 'statr-v7';
 
 const PRECACHE = [
   '/',
